@@ -1,0 +1,223 @@
+DEBUG 2016-07-01 17:30:11,638  1778ms MessagesController     MoveNext           - 
+DEBUG 2016-07-01 17:39:03,447  1735ms MessagesController     MoveNext           - Query text: Microsoft.Bot.Connector.Message
+DEBUG 2016-07-02 14:53:36,599  3659ms MessagesController     MoveNext           - Query text: ne 160th st
+DEBUG 2016-07-02 14:54:16,890 43950ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-02 14:54:24,908 51968ms MessagesController     MoveNext           - Query text: homeacres
+DEBUG 2016-07-02 15:03:27,650  1662ms MessagesController     MoveNext           - Query text: ne
+DEBUG 2016-07-02 15:11:14,636  1527ms MessagesController     MoveNext           - Query text: 405
+DEBUG 2016-07-02 15:11:19,758  6649ms MessagesController     MoveNext           - Query text: ne
+DEBUG 2016-07-02 15:11:23,239 10130ms MessagesController     MoveNext           - Query text: 24
+DEBUG 2016-07-02 15:11:33,891 20782ms MessagesController     MoveNext           - Query text: 99
+DEBUG 2016-07-02 15:11:40,035 26926ms MessagesController     MoveNext           - Query text: 10
+DEBUG 2016-07-02 15:11:41,963 28853ms MessagesController     MoveNext           - Query text: 3
+DEBUG 2016-07-02 15:13:08,417  1520ms MessagesController     MoveNext           - Query text: 99
+DEBUG 2016-07-02 15:13:11,310  4413ms MessagesController     MoveNext           - Query text: 4
+DEBUG 2016-07-02 15:13:23,733 16836ms MessagesController     MoveNext           - Query text: 7
+DEBUG 2016-07-02 15:13:35,857 28959ms MessagesController     MoveNext           - Query text: 7
+DEBUG 2016-07-02 15:14:10,173  1599ms MessagesController     MoveNext           - Query text: 99
+DEBUG 2016-07-02 15:14:13,047  4473ms MessagesController     MoveNext           - Query text: 4
+DEBUG 2016-07-02 15:14:16,492  7918ms MessagesController     MoveNext           - Query text: 405
+DEBUG 2016-07-02 15:14:19,946 11372ms MessagesController     MoveNext           - Query text: i-405
+DEBUG 2016-07-02 15:14:22,803 14230ms MessagesController     MoveNext           - Query text: 3
+DEBUG 2016-07-02 15:14:26,205 17631ms MessagesController     MoveNext           - Query text: ne 85th st
+DEBUG 2016-07-02 15:14:34,416 25843ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-02 15:16:55,644  1532ms MessagesController     MoveNext           - Query text: sr
+DEBUG 2016-07-02 15:17:01,240  7129ms MessagesController     MoveNext           - Query text: 53
+DEBUG 2016-07-02 16:21:19,715  1563ms MessagesController     MoveNext           - Query text: SR 520
+DEBUG 2016-07-02 16:21:23,849  5696ms MessagesController     MoveNext           - Query text: sr 520
+DEBUG 2016-07-02 16:21:36,615 18463ms MessagesController     MoveNext           - Query text: sr
+DEBUG 2016-07-02 16:21:38,323 20171ms MessagesController     MoveNext           - Query text: SR
+DEBUG 2016-07-02 16:28:36,527  1575ms MessagesController     MoveNext           - Query text: sr 520
+DEBUG 2016-07-02 16:28:39,710  4758ms MessagesController     MoveNext           - Query text: SR 520
+DEBUG 2016-07-02 16:31:00,521  1623ms MessagesController     MoveNext           - Query text: sr 520
+DEBUG 2016-07-02 16:31:03,142  4245ms MessagesController     MoveNext           - Query text: SR 520
+DEBUG 2016-07-02 16:34:44,499  1560ms MessagesController     MoveNext           - Query text: sr 520
+DEBUG 2016-07-02 16:34:47,305  4366ms MessagesController     MoveNext           - Query text: SR 520
+DEBUG 2016-07-02 16:35:32,106  1569ms MessagesController     MoveNext           - Query text: SR 520
+DEBUG 2016-07-02 16:35:33,667  3129ms MessagesController     MoveNext           - Query text: 2
+DEBUG 2016-07-02 16:35:35,992  5454ms MessagesController     MoveNext           - Query text: sr 520
+DEBUG 2016-07-02 16:35:38,304  7766ms MessagesController     MoveNext           - Query text: 3
+DEBUG 2016-07-03 14:40:13,800  8560ms MessagesController     MoveNext           - Query text: northeast 85th street
+DEBUG 2016-07-03 14:40:19,938 14697ms MessagesController     MoveNext           - Query text: ne 85th
+DEBUG 2016-07-03 14:40:28,439 23199ms MessagesController     MoveNext           - Query text: 85th
+DEBUG 2016-07-03 14:40:39,154 33913ms MessagesController     MoveNext           - Query text: ne 85th st
+DEBUG 2016-07-03 14:43:07,498  1281ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 14:43:40,692 34475ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 14:45:07,221  1987ms MessagesController     MoveNext           - Query text: northeast 85th
+DEBUG 2016-07-03 14:45:13,503  8268ms MessagesController     MoveNext           - Query text: 116th avenue
+DEBUG 2016-07-03 14:45:20,141 14906ms MessagesController     MoveNext           - Query text: 116th street
+DEBUG 2016-07-03 14:45:22,853 17618ms MessagesController     MoveNext           - Query text: 2
+DEBUG 2016-07-03 16:01:06,756  2263ms MessagesController     MoveNext           - Query text: ne 85th
+DEBUG 2016-07-03 16:01:12,476  7983ms MessagesController     MoveNext           - Query text: 116th street
+DEBUG 2016-07-03 16:01:17,199 12706ms MessagesController     MoveNext           - Query text: 2
+DEBUG 2016-07-03 16:17:59,704 16476ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 16:19:02,152  6983ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 16:19:20,508 25339ms MessagesController     MoveNext           - Query text: 116th st
+DEBUG 2016-07-03 16:40:17,685  4311ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 16:40:27,460 14086ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 16:45:33,959 50831ms MessagesController     MoveNext           - Query text: 116th st
+DEBUG 2016-07-03 16:45:37,469 54340ms MessagesController     MoveNext           - Query text: 116th st
+DEBUG 2016-07-03 16:45:44,742 61613ms MessagesController     MoveNext           - Query text: 1
+DEBUG 2016-07-03 16:52:37,010  4839ms MessagesController     MoveNext           - Query text: 116th st
+DEBUG 2016-07-03 16:52:39,312  7141ms MessagesController     MoveNext           - Query text: 1
+DEBUG 2016-07-03 16:52:57,971 25799ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 16:53:08,640 36468ms MessagesController     MoveNext           - Query text: 116th st
+DEBUG 2016-07-03 17:00:11,891 10870ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 17:00:15,828 14807ms MessagesController     MoveNext           - Query text: 85th st
+DEBUG 2016-07-03 17:00:28,798 27777ms MessagesController     MoveNext           - Query text: 116th st
+DEBUG 2016-07-03 17:00:29,884 28863ms MessagesController     MoveNext           - Query text: 2
+DEBUG 2016-07-03 17:00:34,942 33921ms MessagesController     MoveNext           - Query text: seattle
+DEBUG 2016-07-03 17:00:37,651 36630ms MessagesController     MoveNext           - Query text: bridge
+DEBUG 2016-07-03 17:00:39,822 38801ms MessagesController     MoveNext           - Query text: 2
+DEBUG 2016-07-03 17:00:41,974 40953ms MessagesController     MoveNext           - Query text: 1
+DEBUG 2016-07-03 17:06:53,945  7222ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-03 17:07:00,355 13632ms MessagesController     MoveNext           - Query text: sr 99
+DEBUG 2016-07-03 17:07:02,148 15424ms MessagesController     MoveNext           - Query text: 3
+DEBUG 2016-07-03 17:11:01,927 28994ms MessagesController     MoveNext           - Query text: 99th
+DEBUG 2016-07-03 17:17:20,863  8879ms MessagesController     MoveNext           - Query text: 99th
+DEBUG 2016-07-03 17:17:23,958 11973ms MessagesController     MoveNext           - Query text: 99
+DEBUG 2016-07-03 17:17:25,698 13714ms MessagesController     MoveNext           - Query text: 6
+DEBUG 2016-07-04 13:40:45,344  9550ms MessagesController     MoveNext           - Query text: help
+DEBUG 2016-07-04 13:41:31,606  2314ms MessagesController     MoveNext           - Query text: help
+DEBUG 2016-07-04 13:43:56,117  1929ms MessagesController     MoveNext           - Query text: help
+DEBUG 2016-07-04 13:45:05,730  1923ms MessagesController     MoveNext           - Query text: 99
+DEBUG 2016-07-04 13:45:10,204  6397ms MessagesController     MoveNext           - Query text: 6
+DEBUG 2016-07-04 13:50:33,741  1815ms MessagesController     MoveNext           - Query text: Can I get a little help, please?
+DEBUG 2016-07-04 13:50:39,426  7500ms MessagesController     MoveNext           - Query text: Can I get a little help please?
+DEBUG 2016-07-04 13:50:45,724 13798ms MessagesController     MoveNext           - Query text: Show me a list of cameras.
+DEBUG 2016-07-04 14:28:58,843  1912ms MessagesController     MoveNext           - Query text: ne 85th
+DEBUG 2016-07-04 14:29:04,186  7255ms MessagesController     MoveNext           - Query text: need a little help here
+DEBUG 2016-07-04 14:53:22,535  1897ms MessagesController     MoveNext           - Query text: 99
+DEBUG 2016-07-04 14:53:24,607  3969ms MessagesController     MoveNext           - Query text: 4
+DEBUG 2016-07-04 14:53:27,415  6777ms MessagesController     MoveNext           - Query text: 9
+DEBUG 2016-07-04 14:53:30,770 10132ms MessagesController     MoveNext           - Query text: 1
+DEBUG 2016-07-04 15:03:46,255  1883ms MessagesController     MoveNext           - Query text: view bay area
+DEBUG 2016-07-04 15:03:52,959  8586ms MessagesController     MoveNext           - Query text: view Seattle
+DEBUG 2016-07-04 15:04:03,986 19614ms MessagesController     MoveNext           - Query text: 99
+DEBUG 2016-07-04 15:04:05,215 20842ms MessagesController     MoveNext           - Query text: 3
+DEBUG 2016-07-04 15:04:08,655 24282ms MessagesController     MoveNext           - Query text: view Bay Area
+DEBUG 2016-07-04 15:04:46,169  2113ms MessagesController     MoveNext           - Query text: view bay area
+DEBUG 2016-07-04 15:04:55,184 11128ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-04 15:05:06,689 22633ms MessagesController     MoveNext           - Query text: view seattle
+DEBUG 2016-07-04 15:05:12,738 28682ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-04 15:05:16,314 32258ms MessagesController     MoveNext           - Query text: view blah
+DEBUG 2016-07-04 15:05:18,823 34767ms MessagesController     MoveNext           - Query text: view Bay Area
+DEBUG 2016-07-04 15:05:37,741 53685ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-04 15:07:25,809  1807ms MessagesController     MoveNext           - Query text: view Bay Area
+DEBUG 2016-07-04 15:07:28,667  4665ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-04 15:07:37,510 13509ms MessagesController     MoveNext           - Query text: I80 SAS Tower
+DEBUG 2016-07-04 15:07:41,362 17360ms MessagesController     MoveNext           - Query text: view seattle
+DEBUG 2016-07-04 15:07:43,540 19538ms MessagesController     MoveNext           - Query text: ne 85th st
+DEBUG 2016-07-06 17:25:50,590  4957ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-06 17:34:26,397  1948ms MessagesController     MoveNext           - Query text: ne 85th street
+DEBUG 2016-07-06 17:41:26,783  1641ms MessagesController     MoveNext           - Query text: northeast 160th street
+DEBUG 2016-07-06 17:45:04,102  1597ms MessagesController     MoveNext           - Query text: ne 85th street
+DEBUG 2016-07-06 17:45:10,353  7848ms MessagesController     MoveNext           - Query text: ne 85th st
+DEBUG 2016-07-06 17:45:18,180 15674ms MessagesController     MoveNext           - Query text: ne 160th street
+DEBUG 2016-07-06 17:53:25,490  1659ms MessagesController     Post               - Query text: list
+DEBUG 2016-07-06 17:53:29,123  5293ms MessagesController     Post               - Query text: homeacres
+DEBUG 2016-07-06 17:53:33,272  9441ms MessagesController     Post               - Query text: bickford
+DEBUG 2016-07-06 18:04:29,289  1095ms MessagesController     Post               - Query text: show me the traffic at ne 85th st
+DEBUG 2016-07-07 17:41:16,470  2216ms MessagesController     Post               - Query text: bickford
+DEBUG 2016-07-07 17:41:21,413  7158ms MessagesController     Post               - Query text: bikcford
+DEBUG 2016-07-07 17:41:29,530 15276ms MessagesController     Post               - Query text: homacres rd
+DEBUG 2016-07-07 17:42:08,259 54005ms MessagesController     Post               - Query text: show me traffic for bickford avenue
+DEBUG 2016-07-07 17:51:42,785  1960ms MessagesController     Post               - Query text: show me bickford ave
+DEBUG 2016-07-07 17:51:50,159  9334ms MessagesController     Post               - Query text: bickford ave
+DEBUG 2016-07-07 17:57:04,576  2053ms MessagesController     Post               - Query text: show me bickford ave
+DEBUG 2016-07-07 17:57:23,106 20582ms MessagesController     Post               - Query text: 1
+DEBUG 2016-07-07 17:57:28,402 25879ms MessagesController     Post               - Query text: show me ne 85th street
+DEBUG 2016-07-07 21:10:23,486 13880ms MessagesController     Post               - Query text: show me traffic from ne 85th street
+DEBUG 2016-07-07 21:11:20,592 70986ms MessagesController     Post               - Query text: show me traffic from ne 85th street
+DEBUG 2016-07-07 21:13:13,949  1840ms MessagesController     Post               - Query text: show me the traffic at ne 8th street
+DEBUG 2016-07-07 21:13:22,599 10490ms MessagesController     Post               - Query text: 1
+DEBUG 2016-07-07 21:13:38,358 26249ms MessagesController     Post               - Query text: can i please see ne 160th?
+DEBUG 2016-07-07 21:13:49,748 37639ms MessagesController     Post               - Query text: can I please see ne 160th street?
+DEBUG 2016-07-07 21:14:25,590 73481ms MessagesController     Post               - Query text: sunset
+DEBUG 2016-07-07 21:14:35,375 83266ms MessagesController     Post               - Query text: 2
+DEBUG 2016-07-07 21:14:51,396 99287ms MessagesController     Post               - Query text: can I see the traffic at sunset blvd please?
+DEBUG 2016-07-07 21:15:16,145 124035ms MessagesController     Post               - Query text: what about i-90 east mercer way?
+DEBUG 2016-07-07 21:16:16,951 184842ms MessagesController     Post               - Query text: what cameras on i-5?
+DEBUG 2016-07-07 21:16:26,567 194458ms MessagesController     Post               - Query text: list
+DEBUG 2016-07-07 21:16:41,140 209031ms MessagesController     Post               - Query text: i-5
+DEBUG 2016-07-07 21:17:00,715 228606ms MessagesController     Post               - Query text: 2
+DEBUG 2016-07-09 15:36:52,950  9524ms MessagesController     Post               - Query text: show me ne 85th st
+DEBUG 2016-07-09 16:00:01,151  1788ms MessagesController     Post               - Query text: i-405
+DEBUG 2016-07-09 16:00:05,776  6414ms MessagesController     Post               - Query text: 2
+DEBUG 2016-07-09 16:00:08,754  9392ms MessagesController     Post               - Query text: i-5
+DEBUG 2016-07-09 16:00:10,595 11233ms MessagesController     Post               - Query text: 3
+DEBUG 2016-07-09 16:00:16,644 17281ms MessagesController     Post               - Query text: show me atlantic ave
+DEBUG 2016-07-09 16:00:21,755 22393ms MessagesController     Post               - Query text: atlantic
+DEBUG 2016-07-09 16:00:35,548 36186ms MessagesController     Post               - Query text: show me all the traffic at ne 85th
+DEBUG 2016-07-10 11:32:35,144  2415ms MessagesController     Post               - Query text: ne 85th st
+DEBUG 2016-07-10 14:32:19,796  2102ms MessagesController     Post               - Query text: bickford ave
+DEBUG 2016-07-10 14:32:22,061  4366ms MessagesController     Post               - Query text: bickford
+DEBUG 2016-07-10 14:32:26,020  8326ms MessagesController     Post               - Query text: bikcford
+DEBUG 2016-07-10 14:32:31,449 13754ms MessagesController     Post               - Query text: bickkasdfford
+DEBUG 2016-07-10 14:32:36,757 19062ms MessagesController     Post               - Query text: bikcford ave
+DEBUG 2016-07-10 14:35:12,331  1277ms MessagesController     Post               - Query text: show me traffic for ne 85th st
+DEBUG 2016-07-10 14:35:22,731 11678ms MessagesController     Post               - Query text: show me traffic for ne 85th street please
+DEBUG 2016-07-10 14:35:25,887 14833ms MessagesController     Post               - Query text: ne 85th
+DEBUG 2016-07-10 14:35:30,684 19630ms MessagesController     Post               - Query text: i-405
+DEBUG 2016-07-10 14:35:39,244 28190ms MessagesController     Post               - Query text: ne 85th street
+DEBUG 2016-07-10 14:35:45,109 34055ms MessagesController     Post               - Query text: ne 70th
+DEBUG 2016-07-10 14:35:51,670 40616ms MessagesController     Post               - Query text: list
+DEBUG 2016-07-10 14:36:03,919 52865ms MessagesController     Post               - Query text: kirkland
+DEBUG 2016-07-10 14:44:39,317  1777ms MessagesController     Post               - Query text: show me traffic for ne 85th street please
+DEBUG 2016-07-10 14:44:39,411  1871ms CameraSearchIndex      RunQuery           - Searching for +content:show +content:me +content:traffic +content:for +content:ne +content:85th +content:street +content:please, top score is non-existent
+DEBUG 2016-07-10 14:44:39,420  1880ms CameraSearchIndex      RunQuery           - Searching for content:show me traffic for ne 85th street please~0.5, top score is non-existent
+DEBUG 2016-07-10 14:44:43,005  5465ms CameraSearchIndex      RunQuery           - Searching for content:show content:me content:traffic content:ne content:85th content:street content:please, top score is 0.5884004
+DEBUG 2016-07-10 16:04:47,102  1834ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 16:05:03,987 18719ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 16:22:54,581 22281ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 16:23:25,722 53422ms MessagesController     MoveNext           - Query text: help
+DEBUG 2016-07-10 16:26:25,877 233577ms MessagesController     MoveNext           - Query text: help
+DEBUG 2016-07-10 16:26:41,077 248777ms MessagesController     MoveNext           - Query text: help
+DEBUG 2016-07-10 17:26:41,318  7554ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 17:29:39,003 185239ms MessagesController     MoveNext           - Query text: help
+DEBUG 2016-07-10 17:33:42,552  1956ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 17:37:52,000  2070ms MessagesController     MoveNext           - Query text: help
+DEBUG 2016-07-10 17:41:57,256  1835ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 17:42:02,151  6730ms MessagesController     MoveNext           - Query text: bickford ave
+DEBUG 2016-07-10 17:42:02,198  6777ms CameraSearchIndex      RunQuery           - Searching for +content:bickford +content:ave, top score is 3.05771
+DEBUG 2016-07-10 17:42:47,722  2328ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 17:42:57,689 12295ms MessagesController     MoveNext           - Query text: 405
+DEBUG 2016-07-10 17:42:57,722 12328ms CameraSearchIndex      RunQuery           - Searching for +content:405, top score is non-existent
+DEBUG 2016-07-10 17:42:57,741 12347ms CameraSearchIndex      RunQuery           - Searching for content:405~0.5, top score is non-existent
+DEBUG 2016-07-10 17:43:01,696 16302ms CameraSearchIndex      RunQuery           - Searching for content:405, top score is non-existent
+DEBUG 2016-07-10 17:43:06,288 20894ms MessagesController     MoveNext           - Query text: sunset
+DEBUG 2016-07-10 17:43:06,292 20898ms CameraSearchIndex      RunQuery           - Searching for +content:sunset, top score is 2.680649
+DEBUG 2016-07-10 17:43:08,605 23211ms MessagesController     MoveNext           - Query text: 2
+DEBUG 2016-07-10 17:43:13,284 27890ms MessagesController     MoveNext           - Query text: 1
+DEBUG 2016-07-10 17:43:50,710 65316ms MessagesController     MoveNext           - Query text: 2
+DEBUG 2016-07-10 17:44:31,421 106027ms MessagesController     MoveNext           - Query text: 3
+DEBUG 2016-07-10 17:44:31,425 106031ms CameraSearchIndex      RunQuery           - Searching for +content:3, top score is non-existent
+DEBUG 2016-07-10 17:44:31,425 106031ms CameraSearchIndex      RunQuery           - Searching for content:3~0.5, top score is non-existent
+DEBUG 2016-07-10 17:44:31,425 106031ms CameraSearchIndex      RunQuery           - Searching for content:3, top score is non-existent
+DEBUG 2016-07-10 17:51:12,470 11562ms MessagesController     MoveNext           - Query text: sunset
+DEBUG 2016-07-10 17:51:12,577 11668ms CameraSearchIndex      RunQuery           - Searching for +content:sunset, top score is 2.680649
+DEBUG 2016-07-10 17:51:22,694 21785ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 17:51:34,048 33139ms MessagesController     MoveNext           - Query text: bickford
+DEBUG 2016-07-10 17:51:34,049 33140ms CameraSearchIndex      RunQuery           - Searching for +content:bickford, top score is 2.730072
+DEBUG 2016-07-10 17:51:36,660 35751ms MessagesController     MoveNext           - Query text: sunset
+DEBUG 2016-07-10 17:51:36,662 35753ms CameraSearchIndex      RunQuery           - Searching for +content:sunset, top score is 2.680649
+DEBUG 2016-07-10 17:52:10,776 69867ms MessagesController     MoveNext           - Query text: sunset
+DEBUG 2016-07-10 17:52:10,776 69867ms CameraSearchIndex      RunQuery           - Searching for +content:sunset, top score is 2.680649
+DEBUG 2016-07-10 17:52:26,709 85800ms MessagesController     MoveNext           - Query text: sunset
+DEBUG 2016-07-10 17:52:26,710 85801ms CameraSearchIndex      RunQuery           - Searching for +content:sunset, top score is 2.680649
+DEBUG 2016-07-10 18:04:41,377  2219ms MessagesController     MoveNext           - Query text: sunset
+DEBUG 2016-07-10 18:04:41,471  2313ms CameraSearchIndex      RunQuery           - Searching for +content:sunset, top score is 2.680649
+DEBUG 2016-07-10 18:04:45,466  6308ms MessagesController     MoveNext           - Query text: 2
+DEBUG 2016-07-10 18:04:50,149 10991ms MessagesController     MoveNext           - Query text: 1
+DEBUG 2016-07-10 18:05:00,192 21034ms MessagesController     MoveNext           - Query text: view bay area
+DEBUG 2016-07-10 18:05:06,193 27035ms MessagesController     MoveNext           - Query text: prest
+DEBUG 2016-07-10 18:05:11,801 32643ms MessagesController     MoveNext           - Query text: I80
+DEBUG 2016-07-10 18:05:15,049 35891ms MessagesController     MoveNext           - Query text: list
+DEBUG 2016-07-10 18:05:19,276 40118ms MessagesController     MoveNext           - Query text: SAS Tower
+DEBUG 2016-07-10 18:05:28,481 49323ms MessagesController     MoveNext           - Query text: N1@Presidio Tunnel
+DEBUG 2016-07-10 18:05:33,446 54288ms MessagesController     MoveNext           - Query text: view seattle
+DEBUG 2016-07-10 18:05:39,268 60110ms MessagesController     MoveNext           - Query text: bikcford ave
+DEBUG 2016-07-10 18:05:39,280 60122ms CameraSearchIndex      RunQuery           - Searching for +content:bikcford +content:ave, top score is non-existent
+DEBUG 2016-07-10 18:05:39,300 60142ms CameraSearchIndex      RunQuery           - Searching for content:bikcford ave~0.5, top score is non-existent
+DEBUG 2016-07-10 18:05:39,333 60175ms CameraSearchIndex      RunQuery           - Searching for content:bikcford content:ave, top score is 0.4015486
+DEBUG 2016-07-10 18:05:42,635 63477ms MessagesController     MoveNext           - Query text: 3

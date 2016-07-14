@@ -92,8 +92,8 @@ namespace TrafficCamBot.Data
             }
             Debug.Assert(cameras.ContainsKey(cameraName), "Should have been populated by now");
 
-            // Append the ticks as a cache-buster.
-            var cameraUrl = cameras[cameraName] + "?" + DateTime.Now.Ticks;
+            // Append the current time as a cache-buster.
+            var cameraUrl = cameras[cameraName] + "?" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
             return new CameraImage(cameraUrl);
         }
 

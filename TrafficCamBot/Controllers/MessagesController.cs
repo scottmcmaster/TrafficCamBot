@@ -9,6 +9,7 @@ using static TrafficCamBot.Bot.MessageInterpreter;
 using System;
 using System.Net.Http;
 using System.Net;
+using System.Web.Configuration;
 
 namespace TrafficCamBot.Controllers
 {
@@ -125,10 +126,11 @@ namespace TrafficCamBot.Controllers
 
         private ICameraDataService GetCameraDataService(UserData userData)
         {
+            // First see if there is a service name set on the user data.
+            ICameraDataService service = null;
             if (userData != null)
             {
                 var selectedCity = userData.GetCity();
-                ICameraDataService service = null;
                 if (selectedCity != null)
                 {
                     service = cameraDataServiceManager.GetCameraDataService(selectedCity);
@@ -139,7 +141,16 @@ namespace TrafficCamBot.Controllers
                 }
 
             }
-            // Default to Seattle.
+
+            // Then try the default.
+            string defaultCameraServiceName = WebConfigurationManager.AppSettings["DefaultCameraServiceName"];
+            service = cameraDataServiceManager.GetCameraDataService(defaultCameraServiceName);
+            if (service != null)
+            {
+                return service;
+            }
+
+            // Last chance, use Seattle.
             return cameraDataServiceManager.GetCameraDataService("seattle");
         }
 

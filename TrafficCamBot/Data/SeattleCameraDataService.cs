@@ -11,7 +11,7 @@ namespace TrafficCamBot.Data
     /// <summary>
     /// Serves up all of the Seattle-area traffic cameras.
     /// </summary>
-    public class SeattleCameraDataService : ICameraDataService, IDisposable
+    public class SeattleCameraDataService : CameraDataServiceBase
     {
         /// <summary>
         /// Map of camera title to href of the page with the camera on it. Gets fully populated at initialization-time.
@@ -19,16 +19,11 @@ namespace TrafficCamBot.Data
         private readonly Dictionary<String, String> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
-        /// Searcher to fall back on when direct lookup of a given camera returns no results.
-        /// </summary>
-        private readonly CameraSearcher searcher;
-
-        /// <summary>
         /// Map of camera title to the image url. Gets populated lazily.
         /// </summary>
         private readonly ConcurrentDictionary<String, String> cameras = new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public string Name
+        public override string Name
         {
             get
             {
@@ -50,56 +45,7 @@ namespace TrafficCamBot.Data
                     cameraPages[title] = href;
                 }
             }
-            searcher = new CameraSearcher(cameraPages.Keys.ToList());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="desc"></param>
-        /// <returns>A data object of (text, boolean indicating whether or not to mark it down as an image)</returns>
-        public ICameraLookupData Lookup(String desc)
-        {
-            string cameraName = null;
-            if (cameraPages.ContainsKey(desc))
-            {
-                // We got an exact camera name.
-                cameraName = desc;
-            } else
-            {
-                // Try the searcher.
-                var results = searcher.Search(desc);
-                if (results.Count == 1)
-                {
-                    cameraName = results.First();
-                } else if (results.Count > 1)
-                {
-                    return HandleChoiceResult(results);
-                }
-            }
-
-            if (cameraName == null)
-            {
-                return new CameraLookupError("Not found");
-            }
-
-            // Load the camera image url if we don't already have it cached.
-            if (!cameras.ContainsKey(cameraName))
-            {
-                String href = cameraPages[cameraName];
-                String url = "http://www.wsdot.com/traffic/seattle/" + href;
-                cameras[cameraName] = GetCameraImageUrlFrom(url);
-            }
-            Debug.Assert(cameras.ContainsKey(cameraName), "Should have been populated by now");
-
-            // Append the current time as a cache-buster.
-            var cameraUrl = cameras[cameraName] + "?" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            return new CameraImage(cameraUrl);
-        }
-
-        private ICameraLookupData HandleChoiceResult(IList<string> choices)
-        {
-            return new CameraChoiceList(choices);
+            SetCameraNames(cameraPages.Keys.ToList());
         }
 
         /// <summary>
@@ -114,14 +60,22 @@ namespace TrafficCamBot.Data
             return cameraElem.GetAttributeValue("src", null);
         }
 
-        public void Dispose()
+        protected override CameraImage GetImageUrlForCamera(string cameraName)
         {
-            ((IDisposable)searcher).Dispose();
-        }
+            Debug.Assert(cameraNames.Contains(cameraName));
 
-        public IList<string> ListCameras()
-        {
-            return cameraPages.Keys.ToList();
+            // Load the camera image url if we don't already have it cached.
+            if (!cameras.ContainsKey(cameraName))
+            {
+                String href = cameraPages[cameraName];
+                String url = "http://www.wsdot.com/traffic/seattle/" + href;
+                cameras[cameraName] = GetCameraImageUrlFrom(url);
+            }
+            Debug.Assert(cameras.ContainsKey(cameraName), "Should have been populated by now");
+
+            // Append the current time as a cache-buster.
+            var cameraUrl = cameras[cameraName] + "?" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            return new CameraImage(cameraUrl);
         }
     }
 }

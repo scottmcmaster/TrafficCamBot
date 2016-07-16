@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Web;
 using TrafficCamBot.Bot;
 
 namespace TrafficCamBot.Data
@@ -10,14 +9,14 @@ namespace TrafficCamBot.Data
     /// <summary>
     /// Serves up all of the Bay Area traffic cameras.
     /// </summary>
-    public class BayAreaCameraDataService : ICameraDataService
+    public class BayAreaCameraDataService : CameraDataServiceBase
     {
         /// <summary>
         /// Map of camera title to the image url.
         /// </summary>
         private readonly ConcurrentDictionary<String, String> cameras = new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public string Name
+        public override string Name
         {
             get
             {
@@ -28,6 +27,7 @@ namespace TrafficCamBot.Data
         public BayAreaCameraDataService()
         {
             LoadCameras();
+            SetCameraNames(cameras.Keys.ToList());
         }
 
         /// <summary>
@@ -59,18 +59,10 @@ namespace TrafficCamBot.Data
             cameras["S680@NorthMain"] = "http://www.dot.ca.gov/cwwp2/data/d4/cctv/image/TV216_S680atNMain.jpg";
         }
 
-        public ICameraLookupData Lookup(string desc)
+        protected override CameraImage GetImageUrlForCamera(string cameraName)
         {
-            if (cameras.ContainsKey(desc))
-            {
-                return new CameraImage(cameras[desc]);
-            }
-            return new CameraLookupError("Not found");
-        }
-
-        public IList<string> ListCameras()
-        {
-            return cameras.Keys.ToList();
+            Debug.Assert(cameraNames.Contains(cameraName));
+            return new CameraImage(cameras[cameraName]);
         }
     }
 }

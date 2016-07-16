@@ -197,6 +197,7 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Bot\CameraDataServiceBase.cs" />
     <Compile Include="Bot\MessageInterpreter.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Bot\AlternateNameGenerator.cs" />

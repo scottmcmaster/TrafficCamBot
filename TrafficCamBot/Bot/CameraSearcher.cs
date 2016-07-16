@@ -19,7 +19,7 @@ namespace TrafficCamBot.Bot
         /// Creates a searcher for the given set of camera names.
         /// </summary>
         /// <param name="cameraNames">The camera names</param>
-        public CameraSearcher(List<string> cameraNames)
+        public CameraSearcher(IList<string> cameraNames)
         {
             this.cameraNames = ImmutableList.Create(cameraNames.ToArray());
             searchIndex = new CameraSearchIndex(cameraNames);

@@ -27,3 +27,14 @@ figure out what the user meant.
 ## _enter a camera number from a choice list_
 * If the user was presented with a choice list by the bot, they can enter the appropriate integer to view a given camera.  
 * The choice list stays in conversational state until another one needs to be presented.
+
+# Adding a New CameraDataService
+If you have a new set of traffic cameras you would like the bot to support, follow these steps:  
+* Look at the [existing](https://github.com/scottmcmaster/TrafficCamBot/blob/master/TrafficCamBot/Data/SeattleCameraDataService.cs) [examples](https://github.com/scottmcmaster/TrafficCamBot/blob/master/TrafficCamBot/Data/BayAreaCameraDataService.cs).
+* Create a new class in the [Data folder](https://github.com/scottmcmaster/TrafficCamBot/tree/master/TrafficCamBot/Data), TrafficCamBot.Data namespace.
+* Extend [CameraDataServiceBase](https://github.com/scottmcmaster/TrafficCamBot/blob/master/TrafficCamBot/Bot/CameraDataServiceBase.cs). (You may also just implement ICameraDataService, but you'll lose lots of nice stuff like the Lucene index by default).
+  * Return a unique name from the Name property. Note that this name should be displayable to the user (i.e. user-friendly and meaningful).
+  * In the constructor, call SetCameraNames with a list of all of the camera names your service will understand/support.
+  * Implement GetImageUrlForCamera (basically, given the name of one of your cameras, return the appropriate CameraImage structure).
+  * Send a pull request.
+

@@ -1,5 +1,7 @@
 using Microsoft.Practices.Unity;
+using System.Reflection;
 using System.Web.Http;
+using System.Linq;
 using System.Web.Mvc;
 using TrafficCamBot.Bot;
 using TrafficCamBot.Data;
@@ -13,8 +15,16 @@ namespace TrafficCamBot
         public static void RegisterComponents()
         {
 			container = new UnityContainer();
-            container.RegisterType<ICameraDataService, SeattleCameraDataService>(typeof(SeattleCameraDataService).Name, new ContainerControlledLifetimeManager());
-            container.RegisterType<ICameraDataService, BayAreaCameraDataService>(typeof(BayAreaCameraDataService).Name, new ContainerControlledLifetimeManager());
+            
+            var cameraDataServiceTypes = from t in Assembly.GetExecutingAssembly().GetTypes()
+                                         where t.IsClass && !t.IsAbstract && t.GetInterface(typeof(ICameraDataService).Name) != null
+                                         select t;
+            foreach (var cameraDataServiceType in cameraDataServiceTypes)
+            {
+                container.RegisterType(typeof(ICameraDataService), cameraDataServiceType,
+                    cameraDataServiceType.Name, new ContainerControlledLifetimeManager(),
+                    new InjectionMember[] { });
+            }
 
             container.RegisterType<CameraDataServiceManager, CameraDataServiceManager>(new ContainerControlledLifetimeManager());
 

@@ -83,6 +83,12 @@ namespace TrafficCamBot.Bot
             }
         }
 
+        /// <summary>
+        /// Creates a search document for the given camera including all of the alternate names.
+        /// </summary>
+        /// <param name="title">The camera name, which translates into the document title.</param>
+        /// <param name="altNames">All of the possible alternate names for the camera.</param>
+        /// <returns>The fully created Lucene search document.</returns>
         private Document CreateDocument(string title, IEnumerable<string> altNames)
         {
             var doc = new Document();

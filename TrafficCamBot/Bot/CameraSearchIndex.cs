@@ -1,15 +1,15 @@
-﻿using Lucene.Net.Analysis.Standard;
-using Lucene.Net.Index;
-using Lucene.Net.Store;
-using System;
+﻿using log4net;
+using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
+using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
+using Lucene.Net.Store;
+using System;
 using System.Collections.Generic;
-using Lucene.Net.Analysis;
-using System.Text;
 using System.Linq;
-using log4net;
+using System.Text;
 
 namespace TrafficCamBot.Bot
 {
@@ -31,7 +31,7 @@ namespace TrafficCamBot.Bot
         /// <summary>
         /// The default value for the hit score.
         /// </summary>
-        private const double DEFAULT_HIT_SCORE = 0.25;
+        private const double DEFAULT_HIT_SCORE = 0.2;
 
         /// <summary>
         /// The name of the content field in the generated search doc. Contains various ways of

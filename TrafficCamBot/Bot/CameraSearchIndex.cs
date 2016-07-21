@@ -61,7 +61,8 @@ namespace TrafficCamBot.Bot
             {
                 foreach (string title in cameraNames)
                 {
-                    writer.AddDocument(CreateDocument(title, altNameGenerator.GenerateAlternateCameraNames(title)));
+                    var document = CreateDocument(title, altNameGenerator.GenerateAlternateCameraNames(title));
+                    writer.AddDocument(document);
                 }
 
                 writer.Optimize();

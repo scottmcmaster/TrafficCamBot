@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
+﻿using log4net;
 using Microsoft.Bot.Connector;
-using log4net;
-using System.Text;
+using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Configuration;
+using System.Web.Http;
 using TrafficCamBot.Bot;
 using static TrafficCamBot.Bot.MessageInterpreter;
-using System;
-using System.Net.Http;
-using System.Net;
-using System.Web.Configuration;
 
 namespace TrafficCamBot.Controllers
 {
@@ -41,7 +41,7 @@ namespace TrafficCamBot.Controllers
                 logger.Debug("Query text: " + activity.Text);
 
                 var cameraData = GetCameraDataService(userData);
-                
+
                 string cameraName = null;
                 var messageType = messageInterpreter.InterpretMessage(activity);
 
@@ -52,15 +52,18 @@ namespace TrafficCamBot.Controllers
                     // First see if the user is responding to a choice list.
                     // Note that we're 1-indexing for purposes of talking to the user.
                     cameraName = previousChoiceList.CameraNames[choice - 1];
-                } else if (messageType == MessageType.LIST_CAMERAS)
+                }
+                else if (messageType == MessageType.LIST_CAMERAS)
                 {
                     await connector.Conversations.ReplyToActivityAsync(
                         HandleCameraListReply(activity, cameraData.ListCameras()));
-                } else if (messageType == MessageType.HELP_REQUEST)
+                }
+                else if (messageType == MessageType.HELP_REQUEST)
                 {
                     await connector.Conversations.ReplyToActivityAsync(
                         HandleHelpReply(activity));
-                } else if (messageType == MessageType.SELECT_CITY)
+                }
+                else if (messageType == MessageType.SELECT_CITY)
                 {
                     await connector.Conversations.ReplyToActivityAsync(
                         HandleSelectCityResponse(activity, userData));
@@ -112,7 +115,8 @@ namespace TrafficCamBot.Controllers
                 var result = activity.CreateReply("Now viewing cameras for " + selectedServiceName);
                 userData.SetCity(selectedServiceName);
                 return result;
-            } else
+            }
+            else
             {
                 var sb = new StringBuilder("Supported cities are:  \n");
                 foreach (string serviceName in cameraDataServiceManager.GetCameraDataServiceNames())

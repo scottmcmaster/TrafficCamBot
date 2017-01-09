@@ -91,8 +91,14 @@ namespace TrafficCamBot.Controllers
                         HandleCameraChoiceListReply(activity, cameraInfo, userData));
                 }
             }
-            var reply = HandleSystemMessage(activity);
-            await connector.Conversations.ReplyToActivityAsync(reply);
+            else
+            {
+                var reply = HandleSystemMessage(activity);
+                if (reply != null)
+                {
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
+            }
 
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
@@ -161,6 +167,7 @@ namespace TrafficCamBot.Controllers
         private Activity HandleHelpReply(Activity activity)
         {
             var sb = new StringBuilder();
+            sb.Append("Type 'view <city name>' to pick a city for camera search.  \n");
             sb.Append("Type 'list' to see a list of available traffic cameras.  \n");
             sb.Append("Enter the name of a camera to see the current image.  \n");
             sb.Append("Type 'help' to see this message again.");
@@ -202,14 +209,41 @@ namespace TrafficCamBot.Controllers
                 "![camera](" + ((CameraImage)cameraInfo).Url + ")");
         }
 
-        private Activity HandleSystemMessage(Activity activity)
+        private Activity HandleSystemMessage(Activity message)
         {
-            switch (activity.Type)
+            if (message.Type == ActivityTypes.DeleteUserData)
             {
-                case ActivityTypes.Ping:
-                    var reply = activity.CreateReply();
-                    reply.Type = "Ping";
-                    return reply;
+                // Implement user deletion here
+                // If we handle user deletion, return a real message
+            }
+            else if (message.Type == ActivityTypes.ContactRelationUpdate)
+            {
+                // Handle conversation state changes, like members being added and removed
+                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
+                // Not available in all channels               
+            }
+            else if (message.Type == ActivityTypes.ConversationUpdate)
+            {
+                // Handle conversation state changes, like members being added and removed
+                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
+                // Not available in all channels
+
+
+                ConnectorClient connector = new ConnectorClient(new System.Uri(message.ServiceUrl));
+                Activity reply = message.CreateReply("Welcome to Traffic Cam Bot! Type 'help' to get started");
+                connector.Conversations.ReplyToActivityAsync(reply);
+            }
+            else if (message.Type == ActivityTypes.ContactRelationUpdate)
+            {
+                // Handle add/remove from contact lists
+                // Activity.From + Activity.Action represent what happened
+            }
+            else if (message.Type == ActivityTypes.Typing)
+            {
+                // Handle knowing tha the user is typing
+            }
+            else if (message.Type == ActivityTypes.Ping)
+            {
             }
 
             return null;

@@ -3,6 +3,10 @@
 
 .localhistory
 
+# Config files
+BotConfig-local.config
+BotConfig-remote.config
+
 # User-specific files
 *.suo
 *.user

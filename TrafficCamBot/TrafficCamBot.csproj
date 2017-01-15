@@ -211,6 +211,7 @@
     <Compile Include="Bot\MessageInterpreter.cs" />
     <Compile Include="Controllers\CameraInfoReplyActivityBuilder.cs" />
     <Compile Include="Controllers\CameraListReplyActivityBuilder.cs" />
+    <Compile Include="Controllers\ConversationUpdateReplyActivityBuilder.cs" />
     <Compile Include="Controllers\HelpReplyActivityBuilder.cs" />
     <Compile Include="Controllers\IReplyActivityBuilder.cs" />
     <Compile Include="Controllers\MessagesController.cs" />

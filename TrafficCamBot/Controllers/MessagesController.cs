@@ -143,12 +143,13 @@ namespace TrafficCamBot.Controllers
                     // Handle conversation state changes, like members being added and removed
                     // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                     // Not available in all channels
-
-
                     var connector = new ConnectorClient(new System.Uri(message.ServiceUrl));
-                    var reply = message.CreateReply("Welcome to Traffic Cam Bot! Type 'help' to get started");
-                    reply.TextFormat = TextFormatTypes.Plain;
-                    connector.Conversations.ReplyToActivityAsync(reply);
+                    var userData = new UserData(message);
+                    var builder = new ConversationUpdateReplyActivityBuilder(
+                        GetCameraDataService(userData));
+
+                    connector.Conversations.ReplyToActivityAsync(
+                        builder.BuildReplyActivity(message, userData));
                     break;
                 case ActivityTypes.Typing:
                     break;

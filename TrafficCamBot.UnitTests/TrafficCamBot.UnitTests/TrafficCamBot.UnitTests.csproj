@@ -139,7 +139,6 @@
     <Compile Include="Controller\SelectCityReplyActivityBuilderTest.cs" />
     <Compile Include="Controller\HelpReplyActivityBuilderTest.cs" />
     <Compile Include="Controller\CameraListReplyActivityBuilderTest.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

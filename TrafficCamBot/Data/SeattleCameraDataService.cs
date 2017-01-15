@@ -75,7 +75,7 @@ namespace TrafficCamBot.Data
 
             // Append the current time as a cache-buster.
             var cameraUrl = cameras[cameraName] + "?" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            return new CameraImage(cameraUrl);
+            return new CameraImage(cameraName, cameraUrl);
         }
     }
 }

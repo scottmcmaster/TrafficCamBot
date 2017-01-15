@@ -207,7 +207,12 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Bot\CameraDataServiceBase.cs" />
+    <Compile Include="Bot\ICameraDataServiceManager.cs" />
     <Compile Include="Bot\MessageInterpreter.cs" />
+    <Compile Include="Controllers\CameraInfoReplyActivityBuilder.cs" />
+    <Compile Include="Controllers\CameraListReplyActivityBuilder.cs" />
+    <Compile Include="Controllers\HelpReplyActivityBuilder.cs" />
+    <Compile Include="Controllers\IReplyActivityBuilder.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Bot\AlternateNameGenerator.cs" />
     <Compile Include="Bot\CameraDataServiceManager.cs" />
@@ -216,6 +221,8 @@
     <Compile Include="Bot\CameraLookupError.cs" />
     <Compile Include="Bot\CameraSearcher.cs" />
     <Compile Include="Bot\CameraSearchIndex.cs" />
+    <Compile Include="Controllers\SelectCityReplyActivityBuilder.cs" />
+    <Compile Include="Controllers\IUserData.cs" />
     <Compile Include="Controllers\UserData.cs" />
     <Compile Include="Data\BayAreaCameraDataService.cs" />
     <Compile Include="Bot\ICameraDataService.cs" />
@@ -230,6 +237,8 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="BotConfig-local.config" />
+    <Content Include="BotConfig-remote.config" />
     <None Include="Properties\PublishProfiles\TrafficCamBot - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

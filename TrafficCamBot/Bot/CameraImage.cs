@@ -8,13 +8,12 @@ namespace TrafficCamBot.Bot
     [Serializable]
     public struct CameraImage : ICameraLookupData
     {
-        public string Url
-        {
-            get;
-        }
+        public string Url { get; private set; }
+        public string Name { get; private set; }
 
-        public CameraImage(string url)
+        public CameraImage(string name, string url)
         {
+            Name = name;
             Url = url;
         }
     }

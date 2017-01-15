@@ -1,10 +1,8 @@
 ﻿using log4net;
 using Microsoft.Bot.Connector;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
@@ -16,11 +14,11 @@ namespace TrafficCamBot.Controllers
     [BotAuthentication]
     public class MessagesController : ApiController
     {
-        private readonly ILog logger = LogManager.GetLogger(typeof(MessagesController));
+        readonly ILog logger = LogManager.GetLogger(typeof(MessagesController));
 
-        private CameraDataServiceManager cameraDataServiceManager;
+        CameraDataServiceManager cameraDataServiceManager;
 
-        private readonly MessageInterpreter messageInterpreter = new MessageInterpreter();
+        readonly MessageInterpreter messageInterpreter = new MessageInterpreter();
 
         public MessagesController(CameraDataServiceManager cameraDataServiceManager)
         {
@@ -33,12 +31,11 @@ namespace TrafficCamBot.Controllers
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-            var userData = new UserData(activity);
-
             if (activity.Type == ActivityTypes.Message)
             {
-                logger.Debug("Query text: " + activity.Text);
+                logger.Debug("Raw text: " + activity.Text);
+                var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                var userData = new UserData(activity);
 
                 var cameraData = GetCameraDataService(userData);
 
@@ -49,88 +46,58 @@ namespace TrafficCamBot.Controllers
                 var previousChoiceList = userData.GetChoiceList();
                 if (previousChoiceList != null && int.TryParse(activity.Text, out choice) && choice >= 1 && choice <= previousChoiceList.CameraNames.Count)
                 {
+                    logger.Debug("Replying to choice selection");
                     // First see if the user is responding to a choice list.
                     // Note that we're 1-indexing for purposes of talking to the user.
                     cameraName = previousChoiceList.CameraNames[choice - 1];
+                    await ReplyWithCameraLookup(activity, connector, userData, cameraData, cameraName);
                 }
                 else if (messageType == MessageType.LIST_CAMERAS)
                 {
+                    logger.Debug("Replying with list-cameras");
                     await connector.Conversations.ReplyToActivityAsync(
-                        HandleCameraListReply(activity, cameraData.ListCameras()));
+                        new CameraListReplyActivityBuilder(cameraData.ListCameras())
+                            .BuildReplyActivity(activity, userData));
                 }
                 else if (messageType == MessageType.HELP_REQUEST)
                 {
+                    logger.Debug("Replying with help");
                     await connector.Conversations.ReplyToActivityAsync(
-                        HandleHelpReply(activity));
+                        new HelpReplyActivityBuilder()
+                            .BuildReplyActivity(activity, userData));
                 }
                 else if (messageType == MessageType.SELECT_CITY)
                 {
+                    logger.Debug("Replying to city change");
                     await connector.Conversations.ReplyToActivityAsync(
-                        HandleSelectCityResponse(activity, userData));
+                        new SelectCityReplyActivityBuilder(cameraDataServiceManager)
+                            .BuildReplyActivity(activity, userData));
                 }
                 else
                 {
                     // Otherwise just look up the text they gave us.
                     cameraName = activity.Text;
-                }
-
-                var cameraInfo = cameraData.Lookup(cameraName);
-                if (cameraInfo is CameraImage)
-                {
-                    await connector.Conversations.ReplyToActivityAsync(
-                        HandleCameraImageReply(activity, cameraInfo));
-                }
-                else if (cameraInfo is CameraLookupError)
-                {
-                    await connector.Conversations.ReplyToActivityAsync(
-                        HandleCameraLookupErrorReply(activity, cameraInfo));
-                }
-                else if (cameraInfo is CameraChoiceList)
-                {
-                    await connector.Conversations.ReplyToActivityAsync(
-                        HandleCameraChoiceListReply(activity, cameraInfo, userData));
+                    logger.Debug("Replying to query: " + cameraName);
+                    await ReplyWithCameraLookup(activity, connector, userData, cameraData, cameraName);
                 }
             }
             else
             {
-                var reply = HandleSystemMessage(activity);
-                if (reply != null)
-                {
-                    await connector.Conversations.ReplyToActivityAsync(reply);
-                }
+                HandleSystemMessage(activity);
             }
 
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
 
-        private Activity HandleSelectCityResponse(Activity activity, UserData userData)
+        private static async Task ReplyWithCameraLookup(Activity activity, ConnectorClient connector, UserData userData, ICameraDataService cameraData, string cameraName)
         {
-            var normalizedText = activity.Text.ToLower();
-            string selectedServiceName = null;
-            foreach (string serviceName in cameraDataServiceManager.GetCameraDataServiceNames())
+            var cameraInfo = cameraData.Lookup(cameraName);
+            var reply = new CameraInfoReplyActivityBuilder(cameraInfo)
+                .BuildReplyActivity(activity, userData);
+            if (reply != null)
             {
-                if (normalizedText.Contains(serviceName.ToLower()))
-                {
-                    selectedServiceName = serviceName;
-                    break;
-                }
-            }
-            if (selectedServiceName != null)
-            {
-                var result = activity.CreateReply("Now viewing cameras for " + selectedServiceName);
-                userData.SetCity(selectedServiceName);
-                return result;
-            }
-            else
-            {
-                var sb = new StringBuilder("Supported cities are:  \n");
-                foreach (string serviceName in cameraDataServiceManager.GetCameraDataServiceNames())
-                {
-                    sb.Append(serviceName);
-                    sb.Append("  \n");
-                }
-                return activity.CreateReply(sb.ToString());
+                await connector.Conversations.ReplyToActivityAsync(reply);
             }
         }
 
@@ -164,86 +131,29 @@ namespace TrafficCamBot.Controllers
             return cameraDataServiceManager.GetCameraDataService("seattle");
         }
 
-        private Activity HandleHelpReply(Activity activity)
-        {
-            var sb = new StringBuilder();
-            sb.Append("Type 'view <city name>' to pick a city for camera search.  \n");
-            sb.Append("Type 'list' to see a list of available traffic cameras.  \n");
-            sb.Append("Enter the name of a camera to see the current image.  \n");
-            sb.Append("Type 'help' to see this message again.");
-            return activity.CreateReply(sb.ToString());
-        }
-
-        private Activity HandleCameraChoiceListReply(Activity activity, ICameraLookupData cameraInfo, UserData userData)
-        {
-            var sb = new StringBuilder();
-            sb.Append("Did you mean:\n");
-            int i = 1;
-            foreach (string choiceName in (cameraInfo as CameraChoiceList).CameraNames)
-            {
-                sb.Append($"{i++}. {choiceName}  \n");
-            }
-
-            var replyMessage = activity.CreateReply(sb.ToString());
-            userData.SetChoiceList(cameraInfo as CameraChoiceList);
-            return replyMessage;
-        }
-
-        private static Activity HandleCameraListReply(Activity activity, IList<string> cameraList)
-        {
-            if (cameraList.Count == 0)
-            {
-                return activity.CreateReply("No cameras found");
-            }
-            return activity.CreateReply(string.Join(",", cameraList));
-        }
-
-        private static Activity HandleCameraLookupErrorReply(Activity activity, ICameraLookupData cameraInfo)
-        {
-            return activity.CreateReply(((CameraLookupError)cameraInfo).Message);
-        }
-
-        private static Activity HandleCameraImageReply(Activity activity, ICameraLookupData cameraInfo)
-        {
-            return activity.CreateReply(
-                "![camera](" + ((CameraImage)cameraInfo).Url + ")");
-        }
-
         private Activity HandleSystemMessage(Activity message)
         {
-            if (message.Type == ActivityTypes.DeleteUserData)
+            switch (message.Type)
             {
-                // Implement user deletion here
-                // If we handle user deletion, return a real message
-            }
-            else if (message.Type == ActivityTypes.ContactRelationUpdate)
-            {
-                // Handle conversation state changes, like members being added and removed
-                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
-                // Not available in all channels               
-            }
-            else if (message.Type == ActivityTypes.ConversationUpdate)
-            {
-                // Handle conversation state changes, like members being added and removed
-                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
-                // Not available in all channels
+                case ActivityTypes.DeleteUserData:
+                    break;
+                case ActivityTypes.ContactRelationUpdate:
+                    break;
+                case ActivityTypes.ConversationUpdate:
+                    // Handle conversation state changes, like members being added and removed
+                    // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
+                    // Not available in all channels
 
 
-                ConnectorClient connector = new ConnectorClient(new System.Uri(message.ServiceUrl));
-                Activity reply = message.CreateReply("Welcome to Traffic Cam Bot! Type 'help' to get started");
-                connector.Conversations.ReplyToActivityAsync(reply);
-            }
-            else if (message.Type == ActivityTypes.ContactRelationUpdate)
-            {
-                // Handle add/remove from contact lists
-                // Activity.From + Activity.Action represent what happened
-            }
-            else if (message.Type == ActivityTypes.Typing)
-            {
-                // Handle knowing tha the user is typing
-            }
-            else if (message.Type == ActivityTypes.Ping)
-            {
+                    var connector = new ConnectorClient(new System.Uri(message.ServiceUrl));
+                    var reply = message.CreateReply("Welcome to Traffic Cam Bot! Type 'help' to get started");
+                    reply.TextFormat = TextFormatTypes.Plain;
+                    connector.Conversations.ReplyToActivityAsync(reply);
+                    break;
+                case ActivityTypes.Typing:
+                    break;
+                case ActivityTypes.Ping:
+                    break;
             }
 
             return null;

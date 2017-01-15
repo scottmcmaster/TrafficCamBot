@@ -8,7 +8,7 @@ namespace TrafficCamBot.Bot
     /// <summary>
     /// Holds and dishes out all instances of <see cref="ICameraDataService"/>
     /// </summary>
-    public class CameraDataServiceManager
+    public class CameraDataServiceManager : ICameraDataServiceManager
     {
         private readonly ConcurrentDictionary<string, ICameraDataService> services =
             new ConcurrentDictionary<string, ICameraDataService>(StringComparer.OrdinalIgnoreCase);
@@ -21,13 +21,14 @@ namespace TrafficCamBot.Bot
         public CameraDataServiceManager()
         {
             var managers = UnityConfig.GetConfiguredContainer().ResolveAll(typeof(ICameraDataService));
-            foreach (ICameraDataService manager in managers) {
+            foreach (ICameraDataService manager in managers)
+            {
                 var service = manager as ICameraDataService;
                 services[service.Name] = service;
             }
         }
 
-        internal ICameraDataService GetCameraDataService(string serviceName)
+        public ICameraDataService GetCameraDataService(string serviceName)
         {
             if (services.ContainsKey(serviceName))
             {
@@ -36,7 +37,7 @@ namespace TrafficCamBot.Bot
             return null;
         }
 
-        internal IList<string> GetCameraDataServiceNames()
+        public IList<string> GetCameraDataServiceNames()
         {
             return services.Keys.ToList();
         }

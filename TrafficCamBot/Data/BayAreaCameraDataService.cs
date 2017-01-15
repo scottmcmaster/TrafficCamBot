@@ -62,7 +62,9 @@ namespace TrafficCamBot.Data
         protected override CameraImage GetImageUrlForCamera(string cameraName)
         {
             Debug.Assert(cameraNames.Contains(cameraName));
-            return new CameraImage(cameras[cameraName]);
+            // Append the current time as a cache-buster.
+            var cameraUrl = cameras[cameraName] + "?" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            return new CameraImage(cameraName, cameraUrl);
         }
     }
 }

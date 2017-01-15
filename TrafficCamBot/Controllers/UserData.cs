@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.Bot.Connector;
+﻿using Microsoft.Bot.Connector;
 using TrafficCamBot.Bot;
 
 namespace TrafficCamBot.Controllers
@@ -10,7 +6,7 @@ namespace TrafficCamBot.Controllers
     /// <summary>
     /// Wraps the conversational data.
     /// </summary>
-    public class UserData
+    public class UserData : IUserData
     {
         /// <summary>
         /// Property name to store any in-flight choice list.
@@ -36,7 +32,7 @@ namespace TrafficCamBot.Controllers
             botData = stateClient.BotState.GetUserData(channelId, userId);
         }
 
-        internal CameraChoiceList GetChoiceList()
+        public CameraChoiceList GetChoiceList()
         {
             if (botData == null)
             {
@@ -45,7 +41,7 @@ namespace TrafficCamBot.Controllers
             return botData.GetProperty<CameraChoiceList>(CHOICE_LIST_COOKIE);
         }
 
-        internal void SetCity(string selectedServiceName)
+        public void SetCity(string selectedServiceName)
         {
             if (botData != null)
             {
@@ -54,7 +50,7 @@ namespace TrafficCamBot.Controllers
             }
         }
 
-        internal string GetCity()
+        public string GetCity()
         {
             if (botData == null)
             {
@@ -63,7 +59,7 @@ namespace TrafficCamBot.Controllers
             return botData.GetProperty<string>(CITY_COOKIE);
         }
 
-        internal void SetChoiceList(CameraChoiceList cameraChoiceList)
+        public void SetChoiceList(CameraChoiceList cameraChoiceList)
         {
             if (botData != null)
             {

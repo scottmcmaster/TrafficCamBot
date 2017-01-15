@@ -13,6 +13,7 @@ namespace TrafficCamBot.Controllers
     {
         public const string CameraChoiceListPrompt = "Did you mean:\n";
         public const string ViewInBrowserPrompt = "View in browser";
+        public const string CardViewPrompt = "View";
 
         readonly ILog logger = LogManager.GetLogger(typeof(CameraInfoReplyActivityBuilder));
         readonly ICameraLookupData cameraInfo;
@@ -48,11 +49,28 @@ namespace TrafficCamBot.Controllers
 
         Activity HandleCameraImageReply(Activity activity)
         {
-            return ReplyWithMarkdown(activity);
-            //return ReplyWithHeroCard(activity);
+            switch (activity.ChannelId)
+            {
+                case "skype":
+                    return ReplyWithSimpleMarkdown(activity);
+                case "teams":
+                    return ReplyWithHeroCard(activity);
+                default:
+                    return ReplyWithCardLikeMarkdown(activity);
+            }
         }
 
-        private Activity ReplyWithMarkdown(Activity activity)
+        private Activity ReplyWithSimpleMarkdown(Activity activity)
+        {
+            var cameraImage = (CameraImage)cameraInfo;
+            var sb = new StringBuilder();
+            sb.Append("![camera](");
+            sb.Append(cameraImage.Url);
+            sb.Append(")");
+            return activity.CreateReply(sb.ToString());
+        }
+
+        private Activity ReplyWithCardLikeMarkdown(Activity activity)
         {
             var cameraImage = (CameraImage)cameraInfo;
             var sb = new StringBuilder();
@@ -86,7 +104,7 @@ namespace TrafficCamBot.Controllers
             {
                 Value = cameraImage.Url,
                 Type = "openUrl",
-                Title = "View"
+                Title = CardViewPrompt
             };
             cardButtons.Add(plButton);
             var plCard = new HeroCard

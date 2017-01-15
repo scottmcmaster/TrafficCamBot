@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
+using Microsoft.Bot.Connector;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
+using System.Linq;
 using TrafficCamBot.Bot;
 using TrafficCamBot.Controllers;
 
@@ -41,7 +43,7 @@ namespace TrafficCamBot.UnitTests.Controller
         }
 
         [TestMethod]
-        public void TestCameraImage()
+        public void TestCameraImageDefault()
         {
             var imageInfo = new CameraImage("Camera Name", "http://cameraurl");
             var builder = new CameraInfoReplyActivityBuilder(imageInfo);
@@ -52,6 +54,40 @@ namespace TrafficCamBot.UnitTests.Controller
             reply.Text.Should().Contain("![camera](" + "http://cameraurl");
             reply.Text.Should().Contain(CameraInfoReplyActivityBuilder.ViewInBrowserPrompt);
             reply.Text.Should().Contain("Camera Name");
+        }
+
+        [TestMethod]
+        public void TestCameraImageSkype()
+        {
+            var imageInfo = new CameraImage("Camera Name", "http://cameraurl");
+            var builder = new CameraInfoReplyActivityBuilder(imageInfo);
+            var activity = ActivityTestUtils.CreateActivity();
+            activity.ChannelId = "skype";
+            var userData = new Mock<IUserData>();
+
+            var reply = builder.BuildReplyActivity(activity, userData.Object);
+            reply.Text.Should().Contain("![camera](" + "http://cameraurl");
+            reply.Text.Should().NotContain(CameraInfoReplyActivityBuilder.ViewInBrowserPrompt);
+        }
+
+        [TestMethod]
+        public void TestCameraImageTeams()
+        {
+            var imageInfo = new CameraImage("Camera Name", "http://cameraurl");
+            var builder = new CameraInfoReplyActivityBuilder(imageInfo);
+            var activity = ActivityTestUtils.CreateActivity();
+            activity.ChannelId = "teams";
+            var userData = new Mock<IUserData>();
+
+            var reply = builder.BuildReplyActivity(activity, userData.Object);
+            reply.Type.Should().Be("message");
+            reply.Attachments.Count.Should().Be(1);
+            var heroCard = reply.Attachments.First().Content as HeroCard;
+            heroCard.Buttons.Count.Should().Be(1);
+            heroCard.Title.Should().Be("Camera Name");
+            heroCard.Buttons[0].Value.Should().Be("http://cameraurl");
+            heroCard.Buttons[0].Type.Should().Be("openUrl");
+            heroCard.Buttons[0].Title.Should().Be(CameraInfoReplyActivityBuilder.CardViewPrompt);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace TrafficCamBot.Controllers
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                logger.Debug("Raw text: " + activity.Text);
+                logger.Info("ChannelId: " + activity.ChannelId + ";Query: " + activity.Text);
                 var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 var userData = new UserData(activity);
 

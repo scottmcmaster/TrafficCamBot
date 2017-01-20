@@ -11,9 +11,22 @@ namespace TrafficCamBot.Bot
     /// </summary>
     public class CameraSearcher : IDisposable
     {
-        private readonly IList<string> cameraNames;
+        /// <summary>
+        /// Set of known prompts. If the query starts with any of these,
+        /// we strip it first.
+        /// If any of these are substrings, put the most specific one first.
+        /// </summary>
+        public static readonly IList<string> TryPrompts = ImmutableList.Create(
+            "How about ",
+            "Show the camera at ",
+            "Show me ",
+            "Show ",
+            "What about ",
+            "Let's see ");
 
-        private readonly CameraSearchIndex searchIndex;
+        readonly IList<string> cameraNames;
+
+        readonly CameraSearchIndex searchIndex;
 
         /// <summary>
         /// Creates a searcher for the given set of camera names.
@@ -40,14 +53,30 @@ namespace TrafficCamBot.Bot
         /// <returns>A list which may be empty.</returns>
         public IList<string> Search(string desc)
         {
+            var normalizedQuery = desc.ToLower();
+
+            // Part 1: Preprocess: Look for the well-known and suggested prompts.
+            foreach (var tryPrompt in TryPrompts)
+            {
+                var normalizedTryPrompt = tryPrompt.ToLower();
+                if (normalizedQuery.StartsWith(normalizedTryPrompt, StringComparison.CurrentCulture))
+                {
+                    normalizedQuery = normalizedQuery.Replace(normalizedTryPrompt, "");
+                    break;
+                }
+            }
+
+            // Part 2: Look for the name directly.
             var result = from cameraName in cameraNames
-                         where cameraName.ToLower().StartsWith(desc.ToLower(), System.StringComparison.Ordinal)
+                         where cameraName.ToLower().StartsWith(normalizedQuery, System.StringComparison.Ordinal)
                          select cameraName;
             if (result.Any())
             {
                 return result.ToList();
             }
-            return searchIndex.Search(desc.ToLower());
+
+            // Part 3: Use the search index.
+            return searchIndex.Search(normalizedQuery);
         }
     }
 }

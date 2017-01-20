@@ -52,5 +52,12 @@ namespace TrafficCamBot.UnitTests.Bot
             var result = searcher.Search("85th");
             Assert.AreEqual(1, result.Count);
         }
+
+        [TestMethod]
+        public void TestWithPrompt()
+        {
+            var result = searcher.Search(CameraSearcher.TryPrompts[0] + " ne 85th st");
+            Assert.AreEqual(1, result.Count);
+        }
     }
 }

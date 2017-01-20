@@ -93,7 +93,7 @@ namespace TrafficCamBot.Controllers
         private static async Task ReplyWithCameraLookup(Activity activity, ConnectorClient connector, UserData userData, ICameraDataService cameraData, string cameraName)
         {
             var cameraInfo = cameraData.Lookup(cameraName);
-            var reply = new CameraInfoReplyActivityBuilder(cameraInfo)
+            var reply = new CameraInfoReplyActivityBuilder(cameraInfo, cameraData)
                 .BuildReplyActivity(activity, userData);
             if (reply != null)
             {

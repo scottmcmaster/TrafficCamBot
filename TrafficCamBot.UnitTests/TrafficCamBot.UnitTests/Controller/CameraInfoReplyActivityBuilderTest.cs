@@ -12,16 +12,25 @@ namespace TrafficCamBot.UnitTests.Controller
     [TestClass]
     public class CameraInfoReplyActivityBuilderTest
     {
+        private Mock<ICameraDataService> cameraData;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            cameraData = new Mock<ICameraDataService>();
+            cameraData.Setup(c => c.ListCameras()).Returns(new List<string> { "camera 1", "camera 2" });
+        }
+
         [TestMethod]
         public void TestCameraLookupError()
         {
             var errorInfo = new CameraLookupError("Oops!");
-            var builder = new CameraInfoReplyActivityBuilder(errorInfo);
+            var builder = new CameraInfoReplyActivityBuilder(errorInfo, cameraData.Object);
             var activity = ActivityTestUtils.CreateActivity();
             var userData = new Mock<IUserData>();
 
             var reply = builder.BuildReplyActivity(activity, userData.Object);
-            reply.Text.Should().Be("Oops!");
+            reply.Text.Should().StartWith(CameraInfoReplyActivityBuilder.NotFoundMessage);
         }
 
         [TestMethod]
@@ -32,7 +41,7 @@ namespace TrafficCamBot.UnitTests.Controller
                 "Camera 1",
                 "Camera 2"
             });
-            var builder = new CameraInfoReplyActivityBuilder(choiceInfo);
+            var builder = new CameraInfoReplyActivityBuilder(choiceInfo, cameraData.Object);
             var activity = ActivityTestUtils.CreateActivity();
             var userData = new Mock<IUserData>();
 
@@ -46,7 +55,7 @@ namespace TrafficCamBot.UnitTests.Controller
         public void TestCameraImageDefault()
         {
             var imageInfo = new CameraImage("Camera Name", "http://cameraurl");
-            var builder = new CameraInfoReplyActivityBuilder(imageInfo);
+            var builder = new CameraInfoReplyActivityBuilder(imageInfo, cameraData.Object);
             var activity = ActivityTestUtils.CreateActivity();
             var userData = new Mock<IUserData>();
 
@@ -60,7 +69,7 @@ namespace TrafficCamBot.UnitTests.Controller
         public void TestCameraImageSkype()
         {
             var imageInfo = new CameraImage("Camera Name", "http://cameraurl");
-            var builder = new CameraInfoReplyActivityBuilder(imageInfo);
+            var builder = new CameraInfoReplyActivityBuilder(imageInfo, cameraData.Object);
             var activity = ActivityTestUtils.CreateActivity();
             activity.ChannelId = "skype";
             var userData = new Mock<IUserData>();
@@ -74,7 +83,7 @@ namespace TrafficCamBot.UnitTests.Controller
         public void TestCameraImageTeams()
         {
             var imageInfo = new CameraImage("Camera Name", "http://cameraurl");
-            var builder = new CameraInfoReplyActivityBuilder(imageInfo);
+            var builder = new CameraInfoReplyActivityBuilder(imageInfo, cameraData.Object);
             var activity = ActivityTestUtils.CreateActivity();
             activity.ChannelId = "teams";
             var userData = new Mock<IUserData>();

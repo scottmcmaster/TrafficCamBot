@@ -51,9 +51,9 @@ namespace TrafficCamBot.Controllers
             switch (responseType)
             {
                 case ResponseType.SuggestCameraSearches1:
-                    sb.Append("Try searching for a traffic camera, for example '");
+                    sb.Append("Try searching for a traffic camera, for example *");
                     sb.Append(GetSearchSuggestion());
-                    sb.Append("'");
+                    sb.Append("*");
                     break;
 
                 case ResponseType.SuggestHelp2:
@@ -61,8 +61,9 @@ namespace TrafficCamBot.Controllers
                     break;
 
                 case ResponseType.SuggestCameraSearches2:
-                    sb.Append("You can search for a traffic camera like this: ");
+                    sb.Append("You can search for a traffic camera like this: *");
                     sb.Append(GetSearchSuggestion());
+                    sb.Append('*');
                     break;
 
                 case ResponseType.SuggestView:

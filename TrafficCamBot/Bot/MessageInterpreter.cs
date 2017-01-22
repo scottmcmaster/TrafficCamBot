@@ -1,5 +1,6 @@
 ﻿using Microsoft.Bot.Connector;
 using System;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace TrafficCamBot.Bot
@@ -11,32 +12,42 @@ namespace TrafficCamBot.Bot
     {
         public enum MessageType
         {
-            HELP_REQUEST,
-            LIST_CAMERAS,
-            QUERY,
-            CAMERA_CHOICE,
-            SELECT_CITY
+            HelpRequest,
+            ListCameras,
+            Query,
+            CameraChoice,
+            SelectCity,
+            PointlessChatter
         }
 
         public MessageType InterpretMessage(Activity activity)
         {
             var normalizedText = new string(activity.Text.Where(c => !char.IsPunctuation(c)).ToArray()).ToLower();
 
-            if (QueryContainsWord(normalizedText, "list"))
+            if (PointlessChatterGenerator.IsPointlessChatter(normalizedText))
             {
-                return MessageType.LIST_CAMERAS;
-            } else if (QueryContainsWord(normalizedText, "help"))
-            {
-                return MessageType.HELP_REQUEST;
-            } else if (normalizedText.StartsWith("view ", StringComparison.Ordinal))
-            {
-                return MessageType.SELECT_CITY;
+                return MessageType.PointlessChatter;
             }
 
-            return MessageType.QUERY;
+            if (QueryContainsWord(normalizedText, "list"))
+            {
+                return MessageType.ListCameras;
+            }
+
+            if (QueryContainsWord(normalizedText, "help"))
+            {
+                return MessageType.HelpRequest;
+            }
+
+            if (normalizedText.StartsWith("view ", StringComparison.Ordinal))
+            {
+                return MessageType.SelectCity;
+            }
+
+            return MessageType.Query;
         }
 
-        private bool QueryContainsWord(string queryPhrase, string word)
+        bool QueryContainsWord(string queryPhrase, string word)
         {
             return queryPhrase.Split(' ').Contains(word);
         }

@@ -48,6 +48,7 @@ namespace TrafficCamBot.Controllers
                     sb.Append(serviceName);
                     sb.Append("\n");
                 }
+                sb.Append("I hope to learn about more cameras in the future.");
                 return activity.CreateReply(sb.ToString());
             }
         }

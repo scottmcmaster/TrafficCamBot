@@ -52,21 +52,28 @@ namespace TrafficCamBot.Controllers
                     cameraName = previousChoiceList.CameraNames[choice - 1];
                     await ReplyWithCameraLookup(activity, connector, userData, cameraData, cameraName);
                 }
-                else if (messageType == MessageType.LIST_CAMERAS)
+                else if (messageType == MessageType.PointlessChatter)
+                {
+                    logger.Debug("Replying with something equally pointless");
+                    await connector.Conversations.ReplyToActivityAsync(
+                        new PointlessPhraseReplyActivityBuilder(cameraData)
+                            .BuildReplyActivity(activity, userData));
+                }
+                else if (messageType == MessageType.ListCameras)
                 {
                     logger.Debug("Replying with list-cameras");
                     await connector.Conversations.ReplyToActivityAsync(
                         new CameraListReplyActivityBuilder(cameraData.ListCameras())
                             .BuildReplyActivity(activity, userData));
                 }
-                else if (messageType == MessageType.HELP_REQUEST)
+                else if (messageType == MessageType.HelpRequest)
                 {
                     logger.Debug("Replying with help");
                     await connector.Conversations.ReplyToActivityAsync(
                         new HelpReplyActivityBuilder()
                             .BuildReplyActivity(activity, userData));
                 }
-                else if (messageType == MessageType.SELECT_CITY)
+                else if (messageType == MessageType.SelectCity)
                 {
                     logger.Debug("Replying to city change");
                     await connector.Conversations.ReplyToActivityAsync(

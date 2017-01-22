@@ -1,6 +1,5 @@
 ﻿using log4net;
 using Microsoft.Bot.Connector;
-using System;
 using System.Collections.Generic;
 using System.Text;
 using TrafficCamBot.Bot;
@@ -20,8 +19,6 @@ namespace TrafficCamBot.Controllers
         readonly ILog logger = LogManager.GetLogger(typeof(CameraInfoReplyActivityBuilder));
         readonly ICameraLookupData cameraInfo;
         readonly ICameraDataService cameraData;
-
-        readonly Random rnd = new Random();
 
         public CameraInfoReplyActivityBuilder(ICameraLookupData cameraInfo, ICameraDataService cameraData)
         {
@@ -56,28 +53,9 @@ namespace TrafficCamBot.Controllers
             sb.Append(NotFoundMessage);
             sb.Append(cameraData.Name);
             sb.Append(".  ");
-
-            var allCameras = cameraData.ListCameras();
-            var camera1 = allCameras[rnd.Next(allCameras.Count)];
-            var camera2 = allCameras[rnd.Next(allCameras.Count)];
-            var prompt1 = GetRandomTryPrompt();
-            var prompt2 = GetRandomTryPrompt();
-
-            sb.Append("Why not try\n");
-            sb.Append("* ");
-            sb.Append(prompt1);
-            sb.Append(camera1);
-            sb.Append("\n");
-            sb.Append("* ");
-            sb.Append(prompt2);
-            sb.Append(camera2);
+            sb.Append(new CameraSearchSuggestionBuilder(cameraData).BuildSearchSuggestionList());
 
             return activity.CreateReply(sb.ToString());
-        }
-
-        string GetRandomTryPrompt()
-        {
-            return CameraSearcher.TryPrompts[rnd.Next(CameraSearcher.TryPrompts.Count)];
         }
 
         Activity HandleCameraImageReply(Activity activity)

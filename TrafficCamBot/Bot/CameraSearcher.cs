@@ -22,7 +22,10 @@ namespace TrafficCamBot.Bot
             "Show me ",
             "Show ",
             "What about ",
-            "Let's see ");
+            "Let's see ",
+            "See the camera at ",
+            "See camera ",
+            "See ");
 
         readonly IList<string> cameraNames;
 

@@ -209,8 +209,10 @@
     <Compile Include="Bot\CameraDataServiceBase.cs" />
     <Compile Include="Bot\ICameraDataServiceManager.cs" />
     <Compile Include="Bot\MessageInterpreter.cs" />
+    <Compile Include="Bot\PointlessChatterGenerator.cs" />
     <Compile Include="Controllers\CameraInfoReplyActivityBuilder.cs" />
     <Compile Include="Controllers\CameraListReplyActivityBuilder.cs" />
+    <Compile Include="Controllers\CameraSearchSuggestionBuilder.cs" />
     <Compile Include="Controllers\ConversationUpdateReplyActivityBuilder.cs" />
     <Compile Include="Controllers\HelpReplyActivityBuilder.cs" />
     <Compile Include="Controllers\IReplyActivityBuilder.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Bot\CameraLookupError.cs" />
     <Compile Include="Bot\CameraSearcher.cs" />
     <Compile Include="Bot\CameraSearchIndex.cs" />
+    <Compile Include="Controllers\PointlessPhraseReplyActivityBuilder.cs" />
     <Compile Include="Controllers\SelectCityReplyActivityBuilder.cs" />
     <Compile Include="Controllers\IUserData.cs" />
     <Compile Include="Controllers\UserData.cs" />
@@ -233,6 +236,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ArrayUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

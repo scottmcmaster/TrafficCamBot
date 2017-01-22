@@ -132,10 +132,12 @@
     <Compile Include="Bot\MessageInterpreterTest.cs" />
     <Compile Include="Bot\AlternateNameGeneratorTest.cs" />
     <Compile Include="Bot\CameraSearcherTest.cs" />
+    <Compile Include="Bot\PointlessChatterGeneratorTest.cs" />
     <Compile Include="Bot\TestCameraDataService.cs" />
     <Compile Include="Bot\TestCameraDataServiceManager.cs" />
     <Compile Include="Controller\ActivityTestUtils.cs" />
     <Compile Include="Controller\CameraInfoReplyActivityBuilderTest.cs" />
+    <Compile Include="Controller\CameraSearchSuggestionBuilderTest.cs" />
     <Compile Include="Controller\ConversationUpdateReplyActivityBuilderTest.cs" />
     <Compile Include="Controller\SelectCityReplyActivityBuilderTest.cs" />
     <Compile Include="Controller\HelpReplyActivityBuilderTest.cs" />

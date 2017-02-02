@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using TrafficCamBot.Bot;
@@ -14,13 +15,24 @@ namespace TrafficCamBot.Data
         /// <summary>
         /// Map of camera title to the image url.
         /// </summary>
-        private readonly ConcurrentDictionary<String, String> cameras = new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        readonly ConcurrentDictionary<String, String> cameras = new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        readonly HashSet<string> alternateNames =
+            new HashSet<string> { "oakland", "san jose", "sfo", "sjc", "san fran", "san francisco" };
 
         public override string Name
         {
             get
             {
                 return "Bay Area";
+            }
+        }
+
+        public override HashSet<string> AlternateNames
+        {
+            get
+            {
+                return alternateNames;
             }
         }
 

@@ -16,7 +16,10 @@ namespace TrafficCamBot.Data
         /// <summary>
         /// Map of camera title to href of the page with the camera on it. Gets fully populated at initialization-time.
         /// </summary>
-        private readonly Dictionary<String, String> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        readonly Dictionary<String, String> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        readonly HashSet<string> alternateNames =
+            new HashSet<string> { "sea" };
 
         /// <summary>
         /// Map of camera title to the image url. Gets populated lazily.
@@ -28,6 +31,14 @@ namespace TrafficCamBot.Data
             get
             {
                 return "Seattle";
+            }
+        }
+
+        public override HashSet<string> AlternateNames
+        {
+            get
+            {
+                return alternateNames;
             }
         }
 

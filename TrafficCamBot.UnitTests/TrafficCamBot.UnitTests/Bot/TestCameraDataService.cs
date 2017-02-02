@@ -10,6 +10,14 @@ namespace TrafficCamBot.UnitTests.Bot
             Name = name;
         }
 
+        public HashSet<string> AlternateNames
+        {
+            get
+            {
+                return new HashSet<string> { "foo", "bar" };
+            }
+        }
+
         public string Name
         {
             get; private set;

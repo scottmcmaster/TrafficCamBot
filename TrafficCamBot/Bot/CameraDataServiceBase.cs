@@ -11,6 +11,7 @@ namespace TrafficCamBot.Bot
     public abstract class CameraDataServiceBase : ICameraDataService, IDisposable
     {
         public abstract string Name { get; }
+        public abstract HashSet<string> AlternateNames { get; }
 
         public IList<string> ListCameras()
         {
@@ -77,14 +78,14 @@ namespace TrafficCamBot.Bot
         /// <param name="cameraNames"></param>
         protected void SetCameraNames(IList<string> cameraNames)
         {
-            ((IDisposable) searcher)?.Dispose();
+            ((IDisposable)searcher)?.Dispose();
             this.cameraNames = ImmutableSortedSet.CreateRange(cameraNames);
             searcher = new CameraSearcher(cameraNames);
         }
 
         public void Dispose()
         {
-            ((IDisposable) searcher)?.Dispose();
+            ((IDisposable)searcher)?.Dispose();
         }
 
         private ICameraLookupData HandleChoiceResult(IList<string> choices)

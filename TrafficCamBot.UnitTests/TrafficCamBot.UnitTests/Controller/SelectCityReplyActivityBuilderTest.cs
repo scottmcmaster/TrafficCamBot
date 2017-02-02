@@ -34,5 +34,17 @@ namespace TrafficCamBot.UnitTests.Controller
             var reply = builder.BuildReplyActivity(activity, userData.Object);
             reply.Text.Should().Contain(SelectCityReplyActivityBuilder.NowViewingMessage + "City 1");
         }
+
+        [TestMethod]
+        public void TestCityFoundViaAlternateName()
+        {
+            var builder = new SelectCityReplyActivityBuilder(new TestCameraDataServiceManager());
+            var activity = ActivityTestUtils.CreateActivity();
+            activity.Text = "foo";
+            var userData = new Mock<IUserData>();
+
+            var reply = builder.BuildReplyActivity(activity, userData.Object);
+            reply.Text.Should().Contain(SelectCityReplyActivityBuilder.NowViewingMessage + "City 1");
+        }
     }
 }

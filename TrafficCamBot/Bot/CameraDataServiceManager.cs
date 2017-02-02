@@ -8,7 +8,7 @@ namespace TrafficCamBot.Bot
     /// <summary>
     /// Holds and dishes out all instances of <see cref="ICameraDataService"/>
     /// </summary>
-    public class CameraDataServiceManager : ICameraDataServiceManager
+    public class CameraDataServiceManager : CameraDataServiceManagerBase
     {
         private readonly ConcurrentDictionary<string, ICameraDataService> services =
             new ConcurrentDictionary<string, ICameraDataService>(StringComparer.OrdinalIgnoreCase);
@@ -28,7 +28,15 @@ namespace TrafficCamBot.Bot
             }
         }
 
-        public ICameraDataService GetCameraDataService(string serviceName)
+        public override IEnumerable<ICameraDataService> Services
+        {
+            get
+            {
+                return services.Values;
+            }
+        }
+
+        public override ICameraDataService GetCameraDataService(string serviceName)
         {
             if (services.ContainsKey(serviceName))
             {
@@ -37,7 +45,7 @@ namespace TrafficCamBot.Bot
             return null;
         }
 
-        public IList<string> GetCameraDataServiceNames()
+        public override IList<string> GetCameraDataServiceNames()
         {
             return services.Keys.ToList();
         }

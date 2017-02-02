@@ -12,5 +12,7 @@ namespace TrafficCamBot.Bot
         IList<string> ListCameras();
 
         string Name { get; }
+
+        HashSet<string> AlternateNames { get; }
     }
 }

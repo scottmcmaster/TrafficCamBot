@@ -23,18 +23,11 @@ namespace TrafficCamBot.Controllers
 
         private Activity HandleSelectCityResponse(Activity activity, IUserData userData)
         {
-            var normalizedText = activity.Text.ToLower();
-            string selectedServiceName = null;
-            foreach (string serviceName in cameraDataServiceManager.GetCameraDataServiceNames())
+            var selectedService = cameraDataServiceManager.FindCameraDataService(activity.Text);
+
+            if (selectedService != null)
             {
-                if (normalizedText.Contains(serviceName.ToLower()))
-                {
-                    selectedServiceName = serviceName;
-                    break;
-                }
-            }
-            if (selectedServiceName != null)
-            {
+                var selectedServiceName = selectedService.Name;
                 var result = activity.CreateReply(NowViewingMessage + selectedServiceName);
                 userData.SetCity(selectedServiceName);
                 return result;
@@ -48,7 +41,7 @@ namespace TrafficCamBot.Controllers
                     sb.Append(serviceName);
                     sb.Append("\n");
                 }
-                sb.Append("I hope to learn about more cameras in the future.");
+                sb.Append("<br/>I hope to learn about more cameras in the future.");
                 return activity.CreateReply(sb.ToString());
             }
         }

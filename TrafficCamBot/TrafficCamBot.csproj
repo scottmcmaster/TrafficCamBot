@@ -232,6 +232,7 @@
     <Compile Include="Data\BayAreaCameraDataService.cs" />
     <Compile Include="Bot\ICameraDataService.cs" />
     <Compile Include="Bot\ICameraLookupData.cs" />
+    <Compile Include="Data\NewYorkCityCameraDataService.cs" />
     <Compile Include="Data\SeattleCameraDataService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

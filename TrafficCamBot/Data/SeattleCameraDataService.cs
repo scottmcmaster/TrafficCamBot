@@ -16,7 +16,7 @@ namespace TrafficCamBot.Data
         /// <summary>
         /// Map of camera title to href of the page with the camera on it. Gets fully populated at initialization-time.
         /// </summary>
-        readonly Dictionary<String, String> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        readonly Dictionary<string, string> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         readonly HashSet<string> alternateNames =
             new HashSet<string> { "sea" };
@@ -24,7 +24,7 @@ namespace TrafficCamBot.Data
         /// <summary>
         /// Map of camera title to the image url. Gets populated lazily.
         /// </summary>
-        private readonly ConcurrentDictionary<String, String> cameras = new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        readonly ConcurrentDictionary<string, string> cameras = new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         public override string Name
         {
@@ -44,7 +44,7 @@ namespace TrafficCamBot.Data
 
         public SeattleCameraDataService()
         {
-            String mapPageUrl = "http://www.wsdot.com/traffic/seattle/default.aspx";
+            var mapPageUrl = "http://www.wsdot.com/traffic/seattle/default.aspx";
             var mapPageDoc = new HtmlWeb().Load(mapPageUrl);
             var mapElem = mapPageDoc.GetElementbyId("SeattleNav");
             foreach (var areaNode in mapElem.Elements("area"))
@@ -64,7 +64,7 @@ namespace TrafficCamBot.Data
         /// </summary>
         /// <param name="pageUrl">Page URL to scrape</param>
         /// <returns>The direct URL to the camera image.</returns>
-        private string GetCameraImageUrlFrom(String pageUrl)
+        string GetCameraImageUrlFrom(String pageUrl)
         {
             var cameraPageDoc = new HtmlWeb().Load(pageUrl);
             var cameraElem = cameraPageDoc.GetElementbyId("ILPTrafficCamera");

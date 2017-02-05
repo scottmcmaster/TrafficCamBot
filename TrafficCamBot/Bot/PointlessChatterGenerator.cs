@@ -20,6 +20,8 @@ namespace TrafficCamBot.Bot
         public const string Bye = "bye";
         public const string Goodbye = "goodbye";
         public const string SeeYouLater = "see you";
+        public const string Thanks = "thanks";
+        public const string ThankYou = "thank you";
 
         // Replies
         public const string NotMuch = "Not much.";
@@ -27,6 +29,7 @@ namespace TrafficCamBot.Bot
         public const string GenericGreeting = "Hi!";
         public const string NameReply = "I am the Traffic Cam Bot.";
         public const string ByeReply = "Bye.";
+        public const string ThanksReply = "You're welcome.";
 
         readonly ILog logger = LogManager.GetLogger(typeof(PointlessChatterGenerator));
 
@@ -40,7 +43,9 @@ namespace TrafficCamBot.Bot
            WhatIsYourName,
            Bye,
            Goodbye,
-           SeeYouLater
+           SeeYouLater,
+           Thanks,
+           ThankYou
         };
 
         /// <summary>
@@ -49,7 +54,7 @@ namespace TrafficCamBot.Bot
         /// </summary>
         public static bool ShouldMakeSuggestion(string pointlessResponse)
         {
-            return pointlessResponse != ByeReply;
+            return pointlessResponse != ByeReply && pointlessResponse != ThanksReply;
         }
 
         /// <summary>
@@ -91,6 +96,10 @@ namespace TrafficCamBot.Bot
                 case WhatsYourName:
                 case WhatIsYourName:
                     return NameReply;
+
+                case Thanks:
+                case ThankYou:
+                    return ThanksReply;
 
                 default:
                     return GenericGreeting;

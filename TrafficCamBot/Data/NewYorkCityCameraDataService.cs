@@ -42,12 +42,10 @@ namespace TrafficCamBot.Data
             {
                 var name = tableRow
                     .Descendants("span")
-                    .Where(d => d.Attributes["class"].Value == "OTopTitle")
-                    .First();
+                    .First(d => d.Attributes["class"].Value == "OTopTitle");
                 var checkbox = tableRow
                     .Descendants("input")
-                    .Where(d => d.Attributes["type"].Value == "checkbox")
-                    .FirstOrDefault();
+                    .FirstOrDefault(d => d.Attributes["type"].Value == "checkbox");
                 if (checkbox == null)
                 {
                     continue;

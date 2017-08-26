@@ -129,6 +129,7 @@
     <Compile Include="Bot\PointlessChatterGeneratorTest.cs" />
     <Compile Include="Bot\TestCameraDataService.cs" />
     <Compile Include="Bot\TestCameraDataServiceManager.cs" />
+    <Compile Include="Bot\CameraSoundexTest.cs" />
     <Compile Include="Controller\ActivityTestUtils.cs" />
     <Compile Include="Controller\CameraInfoReplyActivityBuilderTest.cs" />
     <Compile Include="Controller\CameraSearchSuggestionBuilderTest.cs" />

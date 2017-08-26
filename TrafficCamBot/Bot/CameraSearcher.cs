@@ -6,7 +6,7 @@ using System.Linq;
 namespace TrafficCamBot.Bot
 {
     /// <summary>
-    /// Wraps potentially-multiple methods for searching camera data and provides a 
+    /// Wraps potentially-multiple methods for searching camera data and provides a
     /// (currently fixed) strategy for executing them.
     /// </summary>
     public class CameraSearcher : IDisposable
@@ -31,6 +31,9 @@ namespace TrafficCamBot.Bot
 
         readonly CameraSearchIndex searchIndex;
 
+        readonly CameraSoundex soundexIndex;
+
+
         /// <summary>
         /// Creates a searcher for the given set of camera names.
         /// </summary>
@@ -38,7 +41,9 @@ namespace TrafficCamBot.Bot
         public CameraSearcher(IList<string> cameraNames)
         {
             this.cameraNames = ImmutableList.Create(cameraNames.ToArray());
-            searchIndex = new CameraSearchIndex(cameraNames);
+            var altNameGenerator = new AlternateNameGenerator();
+            searchIndex = new CameraSearchIndex(cameraNames, altNameGenerator);
+            soundexIndex = new CameraSoundex(cameraNames, altNameGenerator);
         }
 
         public void Dispose()
@@ -78,8 +83,11 @@ namespace TrafficCamBot.Bot
                 return result.ToList();
             }
 
-            // Part 3: Use the search index.
-            return searchIndex.Search(normalizedQuery);
+            // Part 3: Use the search index and soundex.
+            var combinedResults = new HashSet<string>();
+            combinedResults.UnionWith(searchIndex.Search(normalizedQuery));
+            combinedResults.UnionWith(soundexIndex.Search(normalizedQuery));
+            return combinedResults.ToList();
         }
     }
 }

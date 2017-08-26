@@ -252,6 +252,11 @@ namespace TrafficCamBot.Bot
             alternates = builder.ToImmutable();
         }
 
+        public IDictionary<string, IList<string>> Alternates
+        {
+            get { return alternates; }
+        }
+
         /// <summary>
         /// Gets a list of alternative reasonable names for the given camera name.
         /// </summary>

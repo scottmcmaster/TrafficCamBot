@@ -239,6 +239,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Bot\CameraDataServiceBase.cs" />
     <Compile Include="Bot\CameraDataServiceManagerBase.cs" />
+    <Compile Include="Bot\CameraSoundex.cs" />
     <Compile Include="Bot\ICameraDataServiceManager.cs" />
     <Compile Include="Bot\MessageInterpreter.cs" />
     <Compile Include="Bot\PointlessChatterGenerator.cs" />

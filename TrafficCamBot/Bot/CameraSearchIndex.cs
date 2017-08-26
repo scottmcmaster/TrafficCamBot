@@ -53,10 +53,9 @@ namespace TrafficCamBot.Bot
         /// After this method is called, the searcher is initialized and ready to use.
         /// </summary>
         /// <param name="cameraNames">List of camera names to generate search docs for.</param>
-        public CameraSearchIndex(IList<string> cameraNames)
+        public CameraSearchIndex(IList<string> cameraNames, AlternateNameGenerator altNameGenerator)
         {
             index = new RAMDirectory();
-            var altNameGenerator = new AlternateNameGenerator();
             using (IndexWriter writer = new IndexWriter(index, analyzer, IndexWriter.MaxFieldLength.LIMITED))
             {
                 foreach (string title in cameraNames)

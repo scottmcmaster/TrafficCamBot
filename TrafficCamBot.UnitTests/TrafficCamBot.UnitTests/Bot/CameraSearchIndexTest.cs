@@ -18,7 +18,7 @@ namespace TrafficCamBot.UnitTests.Bot
                 "bickford ave",
                 "116th ave ne"
             };
-            index = new CameraSearchIndex(cameraNames);
+            index = new CameraSearchIndex(cameraNames, new AlternateNameGenerator());
         }
 
         [TestMethod]
@@ -38,6 +38,13 @@ namespace TrafficCamBot.UnitTests.Bot
         public void TestFuzzySearch()
         {
             var result = index.Search("bikcford");
+            Assert.AreEqual(1, result.Count);
+        }
+
+        [TestMethod]
+        public void TestSoundexMatch()
+        {
+            var result = index.Search("bckfrd");
             Assert.AreEqual(1, result.Count);
         }
 
@@ -65,7 +72,7 @@ namespace TrafficCamBot.UnitTests.Bot
         [TestMethod]
         public void TestPhraseSearchForMultiple()
         {
-            // Adjust the hit score because this is a particularly 
+            // Adjust the hit score because this is a particularly
             // contrived and weak match.
             index.HitScore = 0.01;
             var result = index.Search("show me northeast traffic");

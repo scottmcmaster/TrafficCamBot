@@ -309,3 +309,4 @@ $RECYCLE.BIN/
 *.lnk
 
 TrafficCamBot/logs/log.txt
+/TrafficCamBot/ApplicationInsights.targets

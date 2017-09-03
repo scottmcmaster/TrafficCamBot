@@ -1,8 +1,8 @@
 ﻿using HtmlAgilityPack;
+using log4net;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using TrafficCamBot.Bot;
 
@@ -13,10 +13,12 @@ namespace TrafficCamBot.Data
     /// </summary>
     public class SeattleCameraDataService : CameraDataServiceBase
     {
+        readonly ILog logger = LogManager.GetLogger(typeof(SeattleCameraDataService));
+
         /// <summary>
         /// Map of camera title to href of the page with the camera on it. Gets fully populated at initialization-time.
         /// </summary>
-        readonly Dictionary<string, string> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, string> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         readonly HashSet<string> alternateNames =
             new HashSet<string> { "sea" };
@@ -24,7 +26,7 @@ namespace TrafficCamBot.Data
         /// <summary>
         /// Map of camera title to the image url. Gets populated lazily.
         /// </summary>
-        readonly ConcurrentDictionary<string, string> cameras = new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        ConcurrentDictionary<string, string> cameras = new ConcurrentDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         public override string Name
         {
@@ -44,6 +46,14 @@ namespace TrafficCamBot.Data
 
         public SeattleCameraDataService()
         {
+            RefreshCameras();
+        }
+
+        public override void RefreshCameras()
+        {
+            logger.Info("Refreshing Seattle cameras");
+
+            var newCameraPages = cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             var mapPageUrl = "http://www.wsdot.com/traffic/seattle/default.aspx";
             var mapPageDoc = new HtmlWeb().Load(mapPageUrl);
             var mapElem = mapPageDoc.GetElementbyId("SeattleNav");
@@ -53,10 +63,13 @@ namespace TrafficCamBot.Data
                 var href = areaNode.GetAttributeValue("href", null);
                 if (title != null && href != null && href.EndsWith("#cam", StringComparison.Ordinal))
                 {
-                    cameraPages[title] = href;
+                    newCameraPages[title] = href;
                 }
             }
-            SetCameraNames(cameraPages.Keys.ToList());
+
+            cameraPages = newCameraPages;
+            SetCameraNames(newCameraPages.Keys.ToList());
+            cameras.Clear();
         }
 
         /// <summary>
@@ -64,7 +77,7 @@ namespace TrafficCamBot.Data
         /// </summary>
         /// <param name="pageUrl">Page URL to scrape</param>
         /// <returns>The direct URL to the camera image.</returns>
-        string GetCameraImageUrlFrom(String pageUrl)
+        string GetCameraImageUrlFrom(string pageUrl)
         {
             var cameraPageDoc = new HtmlWeb().Load(pageUrl);
             var cameraElem = cameraPageDoc.GetElementbyId("ILPTrafficCamera");
@@ -73,8 +86,6 @@ namespace TrafficCamBot.Data
 
         protected override CameraImage GetImageUrlForCamera(string cameraName)
         {
-            Debug.Assert(cameraNames.Contains(cameraName));
-
             // Load the camera image url if we don't already have it cached.
             if (!cameras.ContainsKey(cameraName))
             {
@@ -82,7 +93,11 @@ namespace TrafficCamBot.Data
                 String url = "http://www.wsdot.com/traffic/seattle/" + href;
                 cameras[cameraName] = GetCameraImageUrlFrom(url);
             }
-            Debug.Assert(cameras.ContainsKey(cameraName), "Should have been populated by now");
+
+            if (!cameras.ContainsKey(cameraName))
+            {
+                throw new CameraNotFoundException("Expected camera not found: " + cameraName);
+            }
 
             // Append the current time as a cache-buster.
             var cameraUrl = cameras[cameraName] + "?" + DateTimeOffset.Now.ToUnixTimeMilliseconds();

@@ -14,5 +14,7 @@ namespace TrafficCamBot.Bot
         string Name { get; }
 
         HashSet<string> AlternateNames { get; }
+
+        void RefreshCameras();
     }
 }

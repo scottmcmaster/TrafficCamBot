@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -10,8 +11,11 @@ namespace TrafficCamBot.Bot
     /// </summary>
     public abstract class CameraDataServiceBase : ICameraDataService, IDisposable
     {
+        readonly ILog logger = LogManager.GetLogger(typeof(CameraDataServiceBase));
+
         public abstract string Name { get; }
         public abstract HashSet<string> AlternateNames { get; }
+        public abstract void RefreshCameras();
 
         public IList<string> ListCameras()
         {
@@ -68,7 +72,15 @@ namespace TrafficCamBot.Bot
                 return new CameraLookupError("Not found");
             }
 
-            return GetImageUrlForCamera(cameraName);
+            try
+            {
+                return GetImageUrlForCamera(cameraName);
+            }
+            catch (CameraNotFoundException ex)
+            {
+                logger.Error(cameraName, ex);
+                return new CameraLookupError("Not found");
+            }
         }
 
 
@@ -78,9 +90,10 @@ namespace TrafficCamBot.Bot
         /// <param name="cameraNames"></param>
         protected void SetCameraNames(IList<string> cameraNames)
         {
-            ((IDisposable)searcher)?.Dispose();
+            var oldSearcher = searcher;
             this.cameraNames = ImmutableSortedSet.CreateRange(cameraNames);
             searcher = new CameraSearcher(cameraNames);
+            ((IDisposable)oldSearcher)?.Dispose();
         }
 
         public void Dispose()

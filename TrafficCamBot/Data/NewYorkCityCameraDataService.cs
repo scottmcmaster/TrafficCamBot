@@ -1,8 +1,8 @@
 ﻿using HtmlAgilityPack;
+using log4net;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using TrafficCamBot.Bot;
 
@@ -10,6 +10,8 @@ namespace TrafficCamBot.Data
 {
     public class NewYorkCityCameraDataService : CameraDataServiceBase
     {
+        readonly ILog logger = LogManager.GetLogger(typeof(NewYorkCityCameraDataService));
+
         const string CameraListUrl = "http://dotsignals.org/multiview2.php";
 
         const string CameraTableRowId = "repCam__ctl0_trCam";
@@ -25,7 +27,7 @@ namespace TrafficCamBot.Data
         /// <summary>
         /// Map of camera title to href of the page with the camera on it. Gets fully populated at initialization-time.
         /// </summary>
-        readonly Dictionary<string, string> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, string> cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Map of camera title to the image url. Gets populated eagerly.
@@ -34,6 +36,15 @@ namespace TrafficCamBot.Data
 
         public NewYorkCityCameraDataService()
         {
+            RefreshCameras();
+        }
+
+        public override void RefreshCameras()
+        {
+            logger.Info("Refreshing NYC cameras");
+
+            var newCameraPages = cameraPages = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
             var listPageDoc = new HtmlWeb().Load(CameraListUrl);
             var tableRows = listPageDoc.DocumentNode
                 .Descendants("tr")
@@ -57,7 +68,9 @@ namespace TrafficCamBot.Data
                 cameraPages[title] = href;
             }
 
-            SetCameraNames(cameraPages.Keys.ToList());
+            cameraPages = newCameraPages;
+            SetCameraNames(newCameraPages.Keys.ToList());
+            cameras.Clear();
         }
 
         public override HashSet<string> AlternateNames
@@ -90,15 +103,17 @@ namespace TrafficCamBot.Data
 
         protected override CameraImage GetImageUrlForCamera(string cameraName)
         {
-            Debug.Assert(cameraNames.Contains(cameraName));
-
             // Load the camera image url if we don't already have it cached.
             if (!cameras.ContainsKey(cameraName))
             {
                 var href = cameraPages[cameraName];
                 cameras[cameraName] = GetCameraImageUrlFrom(href);
             }
-            Debug.Assert(cameras.ContainsKey(cameraName), "Should have been populated by now");
+
+            if (!cameras.ContainsKey(cameraName))
+            {
+                throw new CameraNotFoundException("Expected camera not found: " + cameraName);
+            }
 
             // Append the current time as a cache-buster.
             var cameraUrl = cameras[cameraName] + "?rand=" + DateTimeOffset.Now.ToUnixTimeMilliseconds();

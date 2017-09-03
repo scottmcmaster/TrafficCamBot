@@ -4,7 +4,6 @@ using System.Web.Http;
 using System.Linq;
 using System.Web.Mvc;
 using TrafficCamBot.Bot;
-using TrafficCamBot.Data;
 
 namespace TrafficCamBot
 {
@@ -14,8 +13,8 @@ namespace TrafficCamBot
 
         public static void RegisterComponents()
         {
-			container = new UnityContainer();
-            
+            container = new UnityContainer();
+
             var cameraDataServiceTypes = from t in Assembly.GetExecutingAssembly().GetTypes()
                                          where t.IsClass && !t.IsAbstract && t.GetInterface(typeof(ICameraDataService).Name) != null
                                          select t;

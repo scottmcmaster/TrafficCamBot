@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,8 @@ namespace TrafficCamBot.Data
     /// </summary>
     public class BayAreaCameraDataService : CameraDataServiceBase
     {
+        readonly ILog logger = LogManager.GetLogger(typeof(BayAreaCameraDataService));
+
         /// <summary>
         /// Map of camera title to the image url.
         /// </summary>
@@ -38,8 +41,7 @@ namespace TrafficCamBot.Data
 
         public BayAreaCameraDataService()
         {
-            LoadCameras();
-            SetCameraNames(cameras.Keys.ToList());
+            RefreshCameras();
         }
 
         /// <summary>
@@ -47,8 +49,10 @@ namespace TrafficCamBot.Data
         /// annoying to parse, so for now we'll just hard-code all of the names and
         /// URLs in here.
         /// </summary>
-        private void LoadCameras()
+        public override void RefreshCameras()
         {
+            logger.Info("Refreshing Bay Area cameras");
+
             cameras["I80 SAS Tower"] = "http://www.dot.ca.gov/cwwp2/data/d4/cctv/image/TVD33_E80atSASTower.jpg";
             cameras["S80@Carlson"] = "http://www.dot.ca.gov/cwwp2/data/d4/cctv/image/TV503_W80atCarlson.jpg";
             cameras["S880@Paseo Grande"] = "http://www.dot.ca.gov/cwwp2/data/d4/cctv/image/TV711_S880atPaseoGrande.jpg";
@@ -69,6 +73,7 @@ namespace TrafficCamBot.Data
             cameras["80@6thStreet"] = "http://www.dot.ca.gov/research/its/cctv/images/d04/TV316_E80At6th.jpg";
             cameras["S680@PineValley"] = "http://www.dot.ca.gov/cwwp2/data/d4/cctv/image/TVF05_S680AtPineValley.jpg";
             cameras["S680@NorthMain"] = "http://www.dot.ca.gov/cwwp2/data/d4/cctv/image/TV216_S680atNMain.jpg";
+            SetCameraNames(cameras.Keys.ToList());
         }
 
         protected override CameraImage GetImageUrlForCamera(string cameraName)

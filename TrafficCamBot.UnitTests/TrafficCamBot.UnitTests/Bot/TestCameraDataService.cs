@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TrafficCamBot.Bot;
 
 namespace TrafficCamBot.UnitTests.Bot
@@ -31,6 +32,10 @@ namespace TrafficCamBot.UnitTests.Bot
         public ICameraLookupData Lookup(string desc)
         {
             return null;
+        }
+
+        public void RefreshCameras()
+        {
         }
     }
 }
